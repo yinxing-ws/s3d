@@ -1,1 +1,2 @@
-document.body.append('hello wor1ld');
+export { Entity } from './core/Entity';
+export { Engine } from './core/Engine';

@@ -5,6 +5,8 @@ import babel from '@rollup/plugin-babel';
 import serve from 'rollup-plugin-serve';
 import glslify from 'rollup-plugin-glslify';
 
+const { NODE_ENV } = process.env;
+
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const mainFields =
   NODE_ENV === 'development' ? ['debug', 'module', 'main'] : undefined;
