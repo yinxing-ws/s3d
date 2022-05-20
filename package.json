@@ -2,7 +2,9 @@
   "name": "s3d",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development rollup -cw"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yinxing-ws/s3d.git"
@@ -14,6 +16,21 @@
   },
   "homepage": "https://github.com/yinxing-ws/s3d#readme",
   "devDependencies": {
+    "@babel/core": "^7.18.0",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-proposal-decorators": "^7.17.12",
+    "@babel/plugin-proposal-object-rest-spread": "^7.18.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.17.12",
+    "@babel/plugin-transform-object-assign": "^7.16.7",
+    "@babel/preset-env": "^7.18.0",
+    "@babel/preset-typescript": "^7.17.12",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.74.1",
+    "rollup-plugin-glslify": "^1.2.1",
+    "rollup-plugin-serve": "^1.1.0",
     "typescript": "^4.6.4"
   }
 }
