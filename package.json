@@ -12,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/yinxing-ws/s3d/issues"
   },
-  "homepage": "https://github.com/yinxing-ws/s3d#readme"
+  "homepage": "https://github.com/yinxing-ws/s3d#readme",
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
 }
