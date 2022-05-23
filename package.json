@@ -1,9 +1,17 @@
 {
   "name": "s3d",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "types/**/*"
+  ],
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rollup -cw"
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "b:types": "tsc",
+    "build": "tsc && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -24,6 +32,7 @@
     "@babel/plugin-transform-object-assign": "^7.16.7",
     "@babel/preset-env": "^7.18.0",
     "@babel/preset-typescript": "^7.17.12",
+    "@rollup/plugin-alias": "^3.1.9",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",

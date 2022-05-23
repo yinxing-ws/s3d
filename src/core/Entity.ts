@@ -1,232 +1,547 @@
-import { Engine } from './Engine';
-import { M4 } from './M4';
+import { Matrix, Quaternion, Vector3 } from "@/math";
+import { EngineObject } from "./base";
+import { ComponentCloner } from "./clone/ComponentCloner";
+import { Component } from "./Component";
+import { Script } from "./Script";
+import { ComponentsDependencies } from "./ComponentsDependencies";
+import { Engine } from "./Engine";
+import { Layer } from "./Layer";
+import { Scene } from "./Scene";
+import { Transform } from "./Transform";
+import { UpdateFlag } from "./UpdateFlag";
+import { DisorderedArray } from "./DisorderedArray";
 
-const vertexShaderSource = `
-  attribute vec4 a_position;
-  attribute vec4 a_color;
-  
-  uniform mat4 u_matrix;
-
-  varying vec4 v_color;
-  
-  void main() {
-    // 将位置和矩阵相乘
-    gl_Position = u_matrix * a_position;
-
-    v_color = a_color;
-  }
-`;
-
-const fragmentShaderSource = `
-  // 片断着色器没有默认精度，所以我们需要设置一个精度
-  // mediump是一个不错的默认值，代表“medium precision”（中等精度）
-  precision mediump float;
-
-  varying vec4 v_color;
-
-  void main() {
-    // gl_FragColor是一个片断着色器主要设置的变量
-    gl_FragColor = v_color;
-  }
-`;
-
-const vertexData = [
-  0, 0, 0, 30, 0, 0, 0, 150, 0, 0, 150, 0, 30, 0, 0, 30, 150, 0, 30, 0, 0, 100,
-  0, 0, 30, 30, 0, 30, 30, 0, 100, 0, 0, 100, 30, 0, 30, 60, 0, 67, 60, 0, 30,
-  90, 0, 30, 90, 0, 67, 60, 0, 67, 90, 0, 0, 0, 30, 30, 0, 30, 0, 150, 30, 0,
-  150, 30, 30, 0, 30, 30, 150, 30, 30, 0, 30, 100, 0, 30, 30, 30, 30, 30, 30,
-  30, 100, 0, 30, 100, 30, 30, 30, 60, 30, 67, 60, 30, 30, 90, 30, 30, 90, 30,
-  67, 60, 30, 67, 90, 30, 0, 0, 0, 100, 0, 0, 100, 0, 30, 0, 0, 0, 100, 0, 30,
-  0, 0, 30, 100, 0, 0, 100, 30, 0, 100, 30, 30, 100, 0, 0, 100, 30, 30, 100, 0,
-  30, 30, 30, 0, 30, 30, 30, 100, 30, 30, 30, 30, 0, 100, 30, 30, 100, 30, 0,
-  30, 30, 0, 30, 30, 30, 30, 60, 30, 30, 30, 0, 30, 60, 30, 30, 60, 0, 30, 60,
-  0, 30, 60, 30, 67, 60, 30, 30, 60, 0, 67, 60, 30, 67, 60, 0, 67, 60, 0, 67,
-  60, 30, 67, 90, 30, 67, 60, 0, 67, 90, 30, 67, 90, 0, 30, 90, 0, 30, 90, 30,
-  67, 90, 30, 30, 90, 0, 67, 90, 30, 67, 90, 0, 30, 90, 0, 30, 90, 30, 30, 150,
-  30, 30, 90, 0, 30, 150, 30, 30, 150, 0, 0, 150, 0, 0, 150, 30, 30, 150, 30, 0,
-  150, 0, 30, 150, 30, 30, 150, 0, 0, 0, 0, 0, 0, 30, 0, 150, 30, 0, 0, 0, 0,
-  150, 30, 0, 150, 0,
-];
-
-const colorData = [
-  200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70,
-  120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120,
-  200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70, 120, 200, 70,
-  120, 200, 70, 120, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70,
-  200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70,
-  200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70, 200, 80, 70,
-  200, 80, 70, 200, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70, 200, 210, 70,
-  200, 210, 70, 200, 210, 200, 200, 70, 200, 200, 70, 200, 200, 70, 200, 200,
-  70, 200, 200, 70, 200, 200, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210,
-  100, 70, 210, 100, 70, 210, 100, 70, 210, 160, 70, 210, 160, 70, 210, 160, 70,
-  210, 160, 70, 210, 160, 70, 210, 160, 70, 70, 180, 210, 70, 180, 210, 70, 180,
-  210, 70, 180, 210, 70, 180, 210, 70, 180, 210, 100, 70, 210, 100, 70, 210,
-  100, 70, 210, 100, 70, 210, 100, 70, 210, 100, 70, 210, 76, 210, 100, 76, 210,
-  100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 76, 210, 100, 140, 210, 80,
-  140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 140, 210, 80, 90, 130,
-  110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110, 90, 130, 110,
-  160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220, 160, 160, 220,
-  160, 160, 220,
-];
-
-const createProgram = (
-  gl: WebGL2RenderingContext,
-  vShader: string,
-  fShader: string
-): WebGLProgram => {
-  let vertexShader = createShader(gl, gl.VERTEX_SHADER, vShader);
-  let fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fShader);
-
-  let program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    return program;
+/**
+ * Entity, be used as components container.
+ */
+export class Entity extends EngineObject {
+  /**
+   * @internal
+   */
+  static _findChildByName(root: Entity, name: string): Entity {
+    const children = root._children;
+    for (let i = children.length - 1; i >= 0; i--) {
+      const child = children[i];
+      if (child.name === name) {
+        return child;
+      }
+    }
+    return null;
   }
 
-  gl.deleteProgram(program);
-  return null;
-};
-
-// 创建着色器方法，输入参数：渲染上下文，着色器类型，数据源
-const createShader = (
-  gl: WebGL2RenderingContext,
-  type: number,
-  source: string
-): WebGLShader => {
-  let shader = gl.createShader(type); // 创建着色器对象
-  gl.shaderSource(shader, source); // 提供数据源
-  gl.compileShader(shader); // 编译 -> 生成着色器
-  if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    return shader;
+  /**
+   * @internal
+   */
+  static _traverseSetOwnerScene(entity: Entity, scene: Scene): void {
+    entity._scene = scene;
+    const children = entity._children;
+    for (let i = entity.childCount - 1; i >= 0; i--) {
+      this._traverseSetOwnerScene(children[i], scene);
+    }
   }
 
-  gl.deleteShader(shader);
-  return null;
-};
+  /** The name of entity. */
+  name: string;
+  /** The layer the entity belongs to. */
+  layer: Layer = Layer.Layer0;
+  /** Transform component. */
+  readonly transform: Transform;
 
-// 创建array buffer, 用于向attribute复制
-const createArrayBuffer = (
-  gl: WebGLRenderingContext,
-  data: number[],
-  type = gl.FLOAT
-) => {
-  // 创建buffer并绑定buffer数据
-  let buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  /** @internal */
+  _isActiveInHierarchy: boolean = false;
+  /** @internal */
+  _components: Component[] = [];
+  /** @internal */
+  _scripts: DisorderedArray<Script> = new DisorderedArray<Script>();
+  /** @internal */
+  _children: Entity[] = [];
+  /** @internal */
+  _scene: Scene;
+  /** @internal */
+  _isRoot: boolean = false;
+  /** @internal */
+  _isActive: boolean = true;
 
-  let arrayData = null;
-  if (type == gl.UNSIGNED_BYTE) arrayData = new Uint8Array(data);
-  else arrayData = new Float32Array(data);
+  private _parent: Entity = null;
+  private _activeChangedComponents: Component[];
 
-  gl.bufferData(gl.ARRAY_BUFFER, arrayData, gl.STATIC_DRAW);
-
-  return buffer;
-};
-
-// 绑定数组数据
-const bindArrayData = (
-  gl: WebGLRenderingContext,
-  program: WebGLProgram,
-  data: number[],
-  key: string,
-  size = 2,
-  type = gl.FLOAT,
-  normalize = false
-) => {
-  let positionBuffer = createArrayBuffer(gl, data, type);
-
-  let positionAttributeLocation = gl.getAttribLocation(program, key);
-
-  gl.enableVertexAttribArray(positionAttributeLocation);
-
-  // 将绑定点绑定到缓冲数据（positionBuffer）
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-
-  // 告诉属性怎么从positionBuffer中读取数据 (ARRAY_BUFFER)
-  gl.vertexAttribPointer(
-    positionAttributeLocation,
-    size,
-    type,
-    normalize,
-    0,
-    0 // 每次迭代运行运动多少内存到下一个数据开始点
-  );
-};
-
-// 绑定顶点数据
-const bindVertexData = (
-  gl: WebGL2RenderingContext,
-  program: WebGLProgram,
-  vertexData: number[],
-  key = 'a_position',
-  size = 2
-) => bindArrayData(gl, program, vertexData, key, size);
-
-const degree2Radian = (degree: number) => (degree * Math.PI) / 180;
-
-export class Entity {
-  _engine: Engine;
-  program: WebGLProgram;
-
-  // 变换
-  position: number[] = [200, 200, 0];
-  rotation = [40, 30, 325];
-  scale = [1, 1, 1];
-
-  constructor(engine: Engine) {
-    this._engine = engine;
-    this.program = createProgram(
-      engine.gl,
-      vertexShaderSource,
-      fragmentShaderSource
-    );
+  /**
+   * Whether to activate locally.
+   */
+  get isActive(): boolean {
+    return this._isActive;
   }
 
-  render() {
-    const gl = this._engine.gl;
-    const program = this.program;
+  set isActive(value: boolean) {
+    if (value !== this._isActive) {
+      this._isActive = value;
+      if (value) {
+        const parent = this._parent;
+        if (parent?._isActiveInHierarchy || (this._isRoot && this._scene._isActiveInEngine)) {
+          this._processActive();
+        }
+      } else {
+        if (this._isActiveInHierarchy) {
+          this._processInActive();
+        }
+      }
+    }
+  }
 
-    gl.useProgram(program);
+  /**
+   * Whether it is active in the hierarchy.
+   */
+  get isActiveInHierarchy(): boolean {
+    return this._isActiveInHierarchy;
+  }
 
-    // 绑定顶点数据
-    bindArrayData(gl, program, vertexData, 'a_position', 3);
-    // 绑定颜色数据
-    bindArrayData(gl, program, colorData, 'a_color', 3, gl.UNSIGNED_BYTE, true);
+  /**
+   * The parent entity.
+   */
+  get parent(): Entity {
+    return this._parent;
+  }
 
-    // 绑定resolution
-    let matrixLocation = gl.getUniformLocation(program, 'u_matrix');
+  set parent(entity: Entity) {
+    if (entity !== this._parent) {
+      const oldParent = this._removeFromParent();
+      const newParent = (this._parent = entity);
+      if (newParent) {
+        newParent._children.push(this);
+        const parentScene = newParent._scene;
+        if (this._scene !== parentScene) {
+          Entity._traverseSetOwnerScene(this, parentScene);
+        }
 
-    // 物体的平移 旋转 缩放
-    const position = this.position;
-    const rotation = this.rotation;
-    const scale = this.scale;
+        if (newParent._isActiveInHierarchy) {
+          !this._isActiveInHierarchy && this._isActive && this._processActive();
+        } else {
+          this._isActiveInHierarchy && this._processInActive();
+        }
+      } else {
+        this._isActiveInHierarchy && this._processInActive();
+        if (oldParent) {
+          Entity._traverseSetOwnerScene(this, null);
+        }
+      }
+      this._setTransformDirty();
+    }
+  }
 
-    // 计算矩阵
-    let matrix = M4.perspective(1);
-    matrix = M4.multiply(
-      matrix,
-      M4.projection(gl.canvas.clientWidth, gl.canvas.clientHeight, 400)
-    );
-    matrix = M4.translate(matrix, position[0], position[1], position[2]);
-    matrix = M4.xRotate(matrix, degree2Radian(rotation[0]));
-    matrix = M4.yRotate(matrix, degree2Radian(rotation[1]));
-    matrix = M4.zRotate(matrix, degree2Radian(rotation[2]));
-    matrix = M4.scale(matrix, scale[0], scale[1], scale[2]);
+  /**
+   * The children entities
+   */
+  get children(): Readonly<Entity[]> {
+    return this._children;
+  }
 
-    // 设置矩阵
-    gl.uniformMatrix4fv(matrixLocation, false, matrix);
+  /**
+   * Number of the children entities
+   */
+  get childCount(): number {
+    return this._children.length;
+  }
 
-    // 绑定Z值
-    let fudgeFactorLocation = gl.getUniformLocation(program, 'u_fudgeFactor');
-    gl.uniform1f(fudgeFactorLocation, 1);
+  /**
+   * The scene the entity belongs to.
+   */
+  get scene(): Scene {
+    return this._scene;
+  }
 
-    gl.enable(gl.DEPTH_TEST);
-    // 这里清除颜色及深度缓冲
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  /**
+   * Create a entity.
+   * @param engine - The engine the entity belongs to.
+   */
+  constructor(engine: Engine, name?: string) {
+    super(engine);
+    this.name = name;
+    this.transform = this.addComponent(Transform);
+    this._inverseWorldMatFlag = this.transform.registerWorldChangeFlag();
+  }
 
-    // 绘制
-    gl.drawArrays(gl.TRIANGLES, 0, vertexData.length / 3);
+  /**
+   * Add component based on the component type.
+   * @param type - The type of the component.
+   * @returns	The component which has been added.
+   */
+  addComponent<T extends Component>(type: new (entity: Entity) => T): T {
+    ComponentsDependencies._addCheck(this, type);
+    const component = new type(this);
+    this._components.push(component);
+    if (this._isActiveInHierarchy) {
+      component._setActive(true);
+    }
+    return component;
+  }
+
+  /**
+   * Get component which match the type.
+   * @param type - The type of the component.
+   * @returns	The first component which match type.
+   */
+  getComponent<T extends Component>(type: new (entity: Entity) => T): T {
+    for (let i = this._components.length - 1; i >= 0; i--) {
+      const component = this._components[i];
+      if (component instanceof type) {
+        return component;
+      }
+    }
+  }
+
+  /**
+   * Get components which match the type.
+   * @param type - The type of the component.
+   * @param results - The components which match type.
+   * @returns	The components which match type.
+   */
+  getComponents<T extends Component>(type: new (entity: Entity) => T, results: T[]): T[] {
+    results.length = 0;
+    for (let i = this._components.length - 1; i >= 0; i--) {
+      const component = this._components[i];
+      if (component instanceof type) {
+        results.push(component);
+      }
+    }
+    return results;
+  }
+
+  /**
+   * Get the components which match the type of the entity and it's children.
+   * @param type - The component type.
+   * @param results - The components collection.
+   * @returns	The components collection which match the type.
+   */
+  getComponentsIncludeChildren<T extends Component>(type: new (entity: Entity) => T, results: T[]): T[] {
+    results.length = 0;
+    this._getComponentsInChildren<T>(type, results);
+    return results;
+  }
+
+  /**
+   * Add child entity.
+   * @param child - The child entity which want to be added.
+   */
+  addChild(child: Entity): void {
+    child.parent = this;
+  }
+
+  /**
+   * Remove child entity.
+   * @param child - The child entity which want to be removed.
+   */
+  removeChild(child: Entity): void {
+    child.parent = null;
+  }
+
+  /**
+   * Find child entity by index.
+   * @param index - The index of the child entity.
+   * @returns	The component which be found.
+   */
+  getChild(index: number): Entity {
+    return this._children[index];
+  }
+
+  /**
+   * Find child entity by name.
+   * @param name - The name of the entity which want to be found.
+   * @returns The component which be found.
+   */
+  findByName(name: string): Entity {
+    const children = this._children;
+    const child = Entity._findChildByName(this, name);
+    if (child) return child;
+    for (let i = children.length - 1; i >= 0; i--) {
+      const child = children[i];
+      const grandson = child.findByName(name);
+      if (grandson) {
+        return grandson;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Find the entity by path.
+   * @param path - The path fo the entity eg: /entity.
+   * @returns The component which be found.
+   */
+  findByPath(path: string): Entity {
+    const splits = path.split("/");
+    let entity: Entity = this;
+    for (let i = 0, length = splits.length; i < length; ++i) {
+      const split = splits[i];
+      if (split) {
+        entity = Entity._findChildByName(entity, split);
+        if (!entity) {
+          return null;
+        }
+      }
+    }
+    return entity;
+  }
+
+  /**
+   * Create child entity.
+   * @param name - The child entity's name.
+   * @returns The child entity.
+   */
+  createChild(name?: string): Entity {
+    const child = new Entity(this.engine, name);
+    child.layer = this.layer;
+    child.parent = this;
+    return child;
+  }
+
+  /**
+   * Clear children entities.
+   */
+  clearChildren(): void {
+    const children = this._children;
+    for (let i = children.length - 1; i >= 0; i--) {
+      const child = children[i];
+      child._parent = null;
+      child._isActiveInHierarchy && child._processInActive();
+      Entity._traverseSetOwnerScene(child, null); // Must after child._processInActive().
+    }
+    children.length = 0;
+  }
+
+  /**
+   * Clone
+   * @returns Cloned entity.
+   */
+  clone(): Entity {
+    const cloneEntity = new Entity(this._engine, this.name);
+
+    cloneEntity._isActive = this._isActive;
+    cloneEntity.transform.localMatrix = this.transform.localMatrix;
+
+    const children = this._children;
+    for (let i = 0, len = this._children.length; i < len; i++) {
+      const child = children[i];
+      cloneEntity.addChild(child.clone());
+    }
+
+    const components = this._components;
+    for (let i = 0, n = components.length; i < n; i++) {
+      const sourceComp = components[i];
+      if (!(sourceComp instanceof Transform)) {
+        const targetComp = cloneEntity.addComponent(<new (entity: Entity) => Component>sourceComp.constructor);
+        ComponentCloner.cloneComponent(sourceComp, targetComp);
+      }
+    }
+
+    return cloneEntity;
+  }
+
+  /**
+   * Destroy self.
+   */
+  destroy(): void {
+    if (this._destroyed) return;
+    
+    super.destroy();
+    const components = this._components;
+    for (let i = components.length - 1; i >= 0; i--) {
+      components[i].destroy();
+    }
+    this._components.length = 0;
+
+    const children = this._children;
+    for (let i = children.length - 1; i >= 0; i--) {
+      children[i].destroy();
+    }
+    this._children.length = 0;
+
+    if (this._parent != null) {
+      const parentChildren = this._parent._children;
+      parentChildren.splice(parentChildren.indexOf(this), 1);
+    }
+    this._parent = null;
+  }
+
+  /**
+   * @internal
+   */
+  _removeComponent(component: Component): void {
+    ComponentsDependencies._removeCheck(this, component.constructor as any);
+    const components = this._components;
+    components.splice(components.indexOf(component), 1);
+  }
+
+  /**
+   * @internal
+   */
+  _addScript(script: Script) {
+    script._entityCacheIndex = this._scripts.length;
+    this._scripts.add(script);
+  }
+
+  /**
+   * @internal
+   */
+  _removeScript(script: Script): void {
+    const replaced = this._scripts.deleteByIndex(script._entityCacheIndex);
+    replaced && (replaced._entityCacheIndex = script._entityCacheIndex);
+    script._entityCacheIndex = -1;
+  }
+
+  /**
+   * @internal
+   */
+  _removeFromParent(): Entity {
+    const oldParent = this._parent;
+    if (oldParent != null) {
+      const oldParentChildren = oldParent._children;
+      oldParentChildren.splice(oldParentChildren.indexOf(this), 1);
+      this._parent = null;
+    }
+    return oldParent;
+  }
+
+  /**
+   * @internal
+   */
+  _processActive(): void {
+    if (this._activeChangedComponents) {
+      throw "Note: can't set the 'main inActive entity' active in hierarchy, if the operation is in main inActive entity or it's children script's onDisable Event.";
+    }
+    this._activeChangedComponents = this._engine._componentsManager.getActiveChangedTempList();
+    this._setActiveInHierarchy(this._activeChangedComponents);
+    this._setActiveComponents(true);
+  }
+
+  /**
+   * @internal
+   */
+  _processInActive(): void {
+    if (this._activeChangedComponents) {
+      throw "Note: can't set the 'main active entity' inActive in hierarchy, if the operation is in main active entity or it's children script's onEnable Event.";
+    }
+    this._activeChangedComponents = this._engine._componentsManager.getActiveChangedTempList();
+    this._setInActiveInHierarchy(this._activeChangedComponents);
+    this._setActiveComponents(false);
+  }
+
+  private _getComponentsInChildren<T extends Component>(type: new (entity: Entity) => T, results: T[]): void {
+    for (let i = this._components.length - 1; i >= 0; i--) {
+      const component = this._components[i];
+      if (component instanceof type) {
+        results.push(component);
+      }
+    }
+    for (let i = this._children.length - 1; i >= 0; i--) {
+      this._children[i]._getComponentsInChildren<T>(type, results);
+    }
+  }
+
+  private _setActiveComponents(isActive: boolean): void {
+    const activeChangedComponents = this._activeChangedComponents;
+    for (let i = 0, length = activeChangedComponents.length; i < length; ++i) {
+      activeChangedComponents[i]._setActive(isActive);
+    }
+    this._engine._componentsManager.putActiveChangedTempList(activeChangedComponents);
+    this._activeChangedComponents = null;
+  }
+
+  private _setActiveInHierarchy(activeChangedComponents: Component[]): void {
+    this._isActiveInHierarchy = true;
+    const components = this._components;
+    for (let i = components.length - 1; i >= 0; i--) {
+      activeChangedComponents.push(components[i]);
+    }
+    const children = this._children;
+    for (let i = children.length - 1; i >= 0; i--) {
+      const child: Entity = children[i];
+      child.isActive && child._setActiveInHierarchy(activeChangedComponents);
+    }
+  }
+
+  private _setInActiveInHierarchy(activeChangedComponents: Component[]): void {
+    this._isActiveInHierarchy = false;
+    const components = this._components;
+    for (let i = components.length - 1; i >= 0; i--) {
+      activeChangedComponents.push(components[i]);
+    }
+    const children = this._children;
+    for (let i = children.length - 1; i >= 0; i--) {
+      const child: Entity = children[i];
+      child.isActive && child._setInActiveInHierarchy(activeChangedComponents);
+    }
+  }
+
+  private _setTransformDirty() {
+    if (this.transform) {
+      this.transform._parentChange();
+    } else {
+      for (let i = 0, len = this._children.length; i < len; i++) {
+        this._children[i]._setTransformDirty();
+      }
+    }
+  }
+
+  //--------------------------------------------------------------deprecated----------------------------------------------------------------
+  private _invModelMatrix: Matrix = new Matrix();
+  private _inverseWorldMatFlag: UpdateFlag;
+
+  /**
+   * @deprecated
+   * Use transform.position instead.
+   */
+  get position(): Vector3 {
+    return this.transform.position;
+  }
+
+  set position(val: Vector3) {
+    this.transform.position = val;
+  }
+
+  /**
+   * @deprecated
+   * Use transform.worldPosition instead.
+   */
+  get worldPosition(): Vector3 {
+    return this.transform.worldPosition;
+  }
+
+  set worldPosition(val: Vector3) {
+    this.transform.worldPosition = val;
+  }
+
+  /**
+   * @deprecated
+   * Use transform.rotationQuaternion instead.
+   */
+  get rotation(): Quaternion {
+    return this.transform.rotationQuaternion;
+  }
+
+  set rotation(val: Quaternion) {
+    this.transform.rotationQuaternion = val;
+  }
+
+  /**
+   * @deprecated
+   * Use transform.scale instead.
+   */
+  get scale(): Vector3 {
+    return this.transform.scale;
+  }
+
+  set scale(val: Vector3) {
+    this.transform.scale = val;
+  }
+
+  /**
+   * @deprecated
+   */
+  getInvModelMatrix(): Matrix {
+    if (this._inverseWorldMatFlag.flag) {
+      Matrix.invert(this.transform.worldMatrix, this._invModelMatrix);
+      this._inverseWorldMatFlag.flag = false;
+    }
+    return this._invModelMatrix;
   }
 }
