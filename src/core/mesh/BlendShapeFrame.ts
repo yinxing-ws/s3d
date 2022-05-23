@@ -1,4 +1,4 @@
-import { Vector3 } from '@/math';
+import { Vector3 } from "@/math";
 
 /**
  * BlendShapeFrame.
@@ -27,11 +27,11 @@ export class BlendShapeFrame {
     deltaTangents: Vector3[] = null
   ) {
     if (deltaNormals && deltaNormals.length !== deltaPositions.length) {
-      throw 'deltaNormals length must same with deltaPositions length.';
+      throw "deltaNormals length must same with deltaPositions length.";
     }
 
     if (deltaTangents && deltaTangents.length !== deltaPositions.length) {
-      throw 'deltaTangents length must same with deltaPositions length.';
+      throw "deltaTangents length must same with deltaPositions length.";
     }
 
     this.weight = weight;

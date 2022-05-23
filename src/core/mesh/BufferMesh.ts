@@ -1,11 +1,4 @@
-import {
-  IndexBufferBinding,
-  IndexFormat,
-  Mesh,
-  Buffer,
-  VertexBufferBinding,
-  VertexElement,
-} from '../graphic';
+import { IndexBufferBinding, IndexFormat, Mesh, Buffer, VertexBufferBinding, VertexElement } from "../graphic";
 
 /**
  * BufferMesh.
@@ -56,10 +49,7 @@ export class BufferMesh extends Mesh {
    * @param vertexBufferBindings - Vertex buffer binding
    * @param index - Vertex buffer index, the default value is 0
    */
-  setVertexBufferBinding(
-    vertexBufferBindings: VertexBufferBinding,
-    index?: number
-  ): void;
+  setVertexBufferBinding(vertexBufferBindings: VertexBufferBinding, index?: number): void;
 
   /**
    * Set vertex buffer binding.
@@ -67,11 +57,7 @@ export class BufferMesh extends Mesh {
    * @param stride - Vertex buffer data stride
    * @param index - Vertex buffer index, the default value is 0
    */
-  setVertexBufferBinding(
-    vertexBuffer: Buffer,
-    stride: number,
-    index?: number
-  ): void;
+  setVertexBufferBinding(vertexBuffer: Buffer, stride: number, index?: number): void;
 
   setVertexBufferBinding(
     bufferOrBinding: Buffer | VertexBufferBinding,
@@ -80,18 +66,11 @@ export class BufferMesh extends Mesh {
   ): void {
     let binding = <VertexBufferBinding>bufferOrBinding;
     const isBinding = binding.buffer !== undefined;
-    isBinding ||
-      (binding = new VertexBufferBinding(
-        <Buffer>bufferOrBinding,
-        strideOrFirstIndex
-      ));
+    isBinding || (binding = new VertexBufferBinding(<Buffer>bufferOrBinding, strideOrFirstIndex));
 
     const bindings = this._vertexBufferBindings;
     bindings.length <= index && (bindings.length = index + 1);
-    this._setVertexBufferBinding(
-      isBinding ? strideOrFirstIndex : index,
-      binding
-    );
+    this._setVertexBufferBinding(isBinding ? strideOrFirstIndex : index, binding);
   }
 
   /**
@@ -99,10 +78,7 @@ export class BufferMesh extends Mesh {
    * @param vertexBufferBindings - Vertex buffer binding
    * @param firstIndex - First vertex buffer index, the default value is 0
    */
-  setVertexBufferBindings(
-    vertexBufferBindings: VertexBufferBinding[],
-    firstIndex: number = 0
-  ): void {
+  setVertexBufferBindings(vertexBufferBindings: VertexBufferBinding[], firstIndex: number = 0): void {
     const bindings = this._vertexBufferBindings;
     const count = vertexBufferBindings.length;
     const needLength = firstIndex + count;
@@ -126,15 +102,11 @@ export class BufferMesh extends Mesh {
    */
   setIndexBufferBinding(bufferBinding: IndexBufferBinding | null): void;
 
-  setIndexBufferBinding(
-    bufferOrBinding: Buffer | IndexBufferBinding | null,
-    format?: IndexFormat
-  ): void {
+  setIndexBufferBinding(bufferOrBinding: Buffer | IndexBufferBinding | null, format?: IndexFormat): void {
     let binding = <IndexBufferBinding>bufferOrBinding;
     if (binding) {
       const isBinding = binding.buffer !== undefined;
-      isBinding ||
-        (binding = new IndexBufferBinding(<Buffer>bufferOrBinding, format));
+      isBinding || (binding = new IndexBufferBinding(<Buffer>bufferOrBinding, format));
     }
     this._setIndexBufferBinding(binding);
   }

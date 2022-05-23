@@ -1,1 +1,1 @@
-export type { IPlatformPrimitive } from './IPlatformPrimitive';
+export type { IPlatformPrimitive } from "./IPlatformPrimitive";

@@ -1,23 +1,23 @@
-import { BoundingBox } from '@/math';
-import { Logger } from '../base/Logger';
-import { Camera } from '../Camera';
-import { ignoreClone } from '../clone/CloneManager';
-import { ICustomClone } from '../clone/ComponentCloner';
-import { Entity } from '../Entity';
-import { Mesh } from '../graphic/Mesh';
-import { Renderer } from '../Renderer';
-import { Shader } from '../shader/Shader';
-import { UpdateFlag } from '../UpdateFlag';
+import { BoundingBox } from "@/math";
+import { Logger } from "../base/Logger";
+import { Camera } from "../Camera";
+import { ignoreClone } from "../clone/CloneManager";
+import { ICustomClone } from "../clone/ComponentCloner";
+import { Entity } from "../Entity";
+import { VertexElementFormat } from "../graphic/enums/VertexElementFormat";
+import { Mesh } from "../graphic/Mesh";
+import { Renderer } from "../Renderer";
+import { Shader } from "../shader/Shader";
+import { UpdateFlag } from "../UpdateFlag";
 
 /**
  * MeshRenderer Component.
  */
 export class MeshRenderer extends Renderer implements ICustomClone {
-  private static _uvMacro = Shader.getMacroByName('O3_HAS_UV');
-  private static _normalMacro = Shader.getMacroByName('O3_HAS_NORMAL');
-  private static _tangentMacro = Shader.getMacroByName('O3_HAS_TANGENT');
-  private static _vertexColorMacro =
-    Shader.getMacroByName('O3_HAS_VERTEXCOLOR');
+  private static _uvMacro = Shader.getMacroByName("O3_HAS_UV");
+  private static _normalMacro = Shader.getMacroByName("O3_HAS_NORMAL");
+  private static _tangentMacro = Shader.getMacroByName("O3_HAS_TANGENT");
+  private static _vertexColorMacro = Shader.getMacroByName("O3_HAS_VERTEXCOLOR");
 
   @ignoreClone
   private _mesh: Mesh;
@@ -71,16 +71,16 @@ export class MeshRenderer extends Renderer implements ICustomClone {
         for (let i = 0, n = vertexElements.length; i < n; i++) {
           const { semantic } = vertexElements[i];
           switch (semantic) {
-            case 'TEXCOORD_0':
+            case "TEXCOORD_0":
               shaderData.enableMacro(MeshRenderer._uvMacro);
               break;
-            case 'NORMAL':
+            case "NORMAL":
               shaderData.enableMacro(MeshRenderer._normalMacro);
               break;
-            case 'TANGENT':
+            case "TANGENT":
               shaderData.enableMacro(MeshRenderer._tangentMacro);
               break;
-            case 'COLOR_0':
+            case "COLOR_0":
               shaderData.enableMacro(MeshRenderer._vertexColorMacro);
               break;
           }
@@ -100,7 +100,7 @@ export class MeshRenderer extends Renderer implements ICustomClone {
         }
       }
     } else {
-      Logger.error('mesh is null.');
+      Logger.error("mesh is null.");
     }
   }
 

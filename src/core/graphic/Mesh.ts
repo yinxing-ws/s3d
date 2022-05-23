@@ -1,16 +1,16 @@
-import { IPlatformPrimitive } from '@/design';
-import { BoundingBox } from '@/math';
-import { RefObject } from '../asset/RefObject';
-import { Engine } from '../Engine';
-import { BufferUtil } from './BufferUtil';
-import { MeshTopology } from './enums/MeshTopology';
-import { IndexBufferBinding } from './IndexBufferBinding';
-import { SubMesh } from './SubMesh';
-import { VertexBufferBinding } from './VertexBufferBinding';
-import { VertexElement } from './VertexElement';
-import { ShaderProgram } from '../shader/ShaderProgram';
-import { UpdateFlag } from '../UpdateFlag';
-import { UpdateFlagManager } from '../UpdateFlagManager';
+import { IPlatformPrimitive } from "@/design/renderingHardwareInterface/IPlatformPrimitive";
+import { BoundingBox } from "@/math";
+import { RefObject } from "../asset/RefObject";
+import { Engine } from "../Engine";
+import { BufferUtil } from "../graphic/BufferUtil";
+import { MeshTopology } from "../graphic/enums/MeshTopology";
+import { IndexBufferBinding } from "../graphic/IndexBufferBinding";
+import { SubMesh } from "../graphic/SubMesh";
+import { VertexBufferBinding } from "../graphic/VertexBufferBinding";
+import { VertexElement } from "../graphic/VertexElement";
+import { ShaderProgram } from "../shader/ShaderProgram";
+import { UpdateFlag } from "../UpdateFlag";
+import { UpdateFlagManager } from "../UpdateFlagManager";
 
 /**
  * Mesh.
@@ -60,8 +60,7 @@ export abstract class Mesh extends RefObject {
   constructor(engine: Engine, name?: string) {
     super(engine);
     this.name = name;
-    this._platformPrimitive =
-      this._engine._hardwareRenderer.createPlatformPrimitive(this);
+    this._platformPrimitive = this._engine._hardwareRenderer.createPlatformPrimitive(this);
   }
 
   /**
@@ -85,7 +84,7 @@ export abstract class Mesh extends RefObject {
     count?: number,
     topology: MeshTopology = MeshTopology.Triangles
   ): SubMesh {
-    if (typeof startOrSubMesh === 'number') {
+    if (typeof startOrSubMesh === "number") {
       startOrSubMesh = new SubMesh(startOrSubMesh, count, topology);
     }
     this._subMeshes.push(startOrSubMesh);
@@ -156,10 +155,7 @@ export abstract class Mesh extends RefObject {
     }
   }
 
-  protected _setVertexBufferBinding(
-    index: number,
-    binding: VertexBufferBinding
-  ): void {
+  protected _setVertexBufferBinding(index: number, binding: VertexBufferBinding): void {
     if (this._getRefCount() > 0) {
       const lastBinding = this._vertexBufferBindings[index];
       lastBinding && lastBinding._buffer._addRefCount(-1);

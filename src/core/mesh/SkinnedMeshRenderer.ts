@@ -1,36 +1,28 @@
-import { Matrix } from '@/math';
-import { Logger } from '../base/Logger';
-import { ignoreClone } from '../clone/CloneManager';
-import { Entity } from '../Entity';
-import { RenderContext } from '../RenderPipeline/RenderContext';
-import { Shader } from '../shader';
-import { TextureFilterMode } from '../texture/enums/TextureFilterMode';
-import { TextureFormat } from '../texture/enums/TextureFormat';
-import { Texture2D } from '../texture/Texture2D';
-import { MeshRenderer } from './MeshRenderer';
-import { ModelMesh } from './ModelMesh';
-import { Skin } from './Skin';
+import { Matrix } from "@/math";
+import { Logger } from "../base/Logger";
+import { ignoreClone } from "../clone/CloneManager";
+import { Entity } from "../Entity";
+import { RenderContext } from "../RenderPipeline/RenderContext";
+import { Shader } from "../shader";
+import { TextureFilterMode } from "../texture/enums/TextureFilterMode";
+import { TextureFormat } from "../texture/enums/TextureFormat";
+import { Texture2D } from "../texture/Texture2D";
+import { MeshRenderer } from "./MeshRenderer";
+import { ModelMesh } from "./ModelMesh";
+import { Skin } from "./Skin";
 
 /**
  * SkinnedMeshRenderer.
  */
 export class SkinnedMeshRenderer extends MeshRenderer {
-  private static _blendShapeMacro = Shader.getMacroByName('OASIS_BLENDSHAPE');
-  private static _blendShapeNormalMacro = Shader.getMacroByName(
-    'OASIS_BLENDSHAPE_NORMAL'
-  );
-  private static _blendShapeTangentMacro = Shader.getMacroByName(
-    'OASIS_BLENDSHAPE_TANGENT'
-  );
+  private static _blendShapeMacro = Shader.getMacroByName("OASIS_BLENDSHAPE");
+  private static _blendShapeNormalMacro = Shader.getMacroByName("OASIS_BLENDSHAPE_NORMAL");
+  private static _blendShapeTangentMacro = Shader.getMacroByName("OASIS_BLENDSHAPE_TANGENT");
 
-  private static _jointCountProperty = Shader.getPropertyByName('u_jointCount');
-  private static _jointSamplerProperty =
-    Shader.getPropertyByName('u_jointSampler');
-  private static _jointMatrixProperty =
-    Shader.getPropertyByName('u_jointMatrix');
-  private static _blendShapeWeightsProperty = Shader.getPropertyByName(
-    'u_blendShapeWeights'
-  );
+  private static _jointCountProperty = Shader.getPropertyByName("u_jointCount");
+  private static _jointSamplerProperty = Shader.getPropertyByName("u_jointSampler");
+  private static _jointMatrixProperty = Shader.getPropertyByName("u_jointMatrix");
+  private static _blendShapeWeightsProperty = Shader.getPropertyByName("u_blendShapeWeights");
 
   private static _maxJoints: number = 0;
 
@@ -81,18 +73,12 @@ export class SkinnedMeshRenderer extends MeshRenderer {
 
     const shaderData = this.shaderData;
     if (!this._useJointTexture && this.matrixPalette) {
-      shaderData.setFloatArray(
-        SkinnedMeshRenderer._jointMatrixProperty,
-        this.matrixPalette
-      );
+      shaderData.setFloatArray(SkinnedMeshRenderer._jointMatrixProperty, this.matrixPalette);
     }
 
     const mesh = <ModelMesh>this.mesh;
     if (mesh._hasBlendShape) {
-      shaderData.setFloatArray(
-        SkinnedMeshRenderer._blendShapeWeightsProperty,
-        this._blendShapeWeights
-      );
+      shaderData.setFloatArray(SkinnedMeshRenderer._blendShapeWeightsProperty, this._blendShapeWeights);
       shaderData.enableMacro(SkinnedMeshRenderer._blendShapeMacro);
 
       if (mesh._useBlendShapeNormal) {
@@ -136,15 +122,13 @@ export class SkinnedMeshRenderer extends MeshRenderer {
     /** Whether to use a skeleton texture */
     const rhi = this.entity.engine._hardwareRenderer;
     if (!rhi) return;
-    const maxAttribUniformVec4 = rhi.renderStates.getParameter(
-      rhi.gl.MAX_VERTEX_UNIFORM_VECTORS
-    );
+    const maxAttribUniformVec4 = rhi.renderStates.getParameter(rhi.gl.MAX_VERTEX_UNIFORM_VECTORS);
     const maxJoints = Math.floor((maxAttribUniformVec4 - 30) / 4);
     const shaderData = this.shaderData;
     const jointCount = jointNodes.length;
 
     if (jointCount) {
-      shaderData.enableMacro('O3_HAS_SKIN');
+      shaderData.enableMacro("O3_HAS_SKIN");
       shaderData.setInt(SkinnedMeshRenderer._jointCountProperty, jointCount);
       if (jointCount > maxJoints) {
         if (rhi.canIUseMoreJoints) {
@@ -158,11 +142,11 @@ export class SkinnedMeshRenderer extends MeshRenderer {
       } else {
         const maxJoints = Math.max(SkinnedMeshRenderer._maxJoints, jointCount);
         SkinnedMeshRenderer._maxJoints = maxJoints;
-        shaderData.disableMacro('O3_USE_JOINT_TEXTURE');
-        shaderData.enableMacro('O3_JOINTS_NUM', maxJoints.toString());
+        shaderData.disableMacro("O3_USE_JOINT_TEXTURE");
+        shaderData.enableMacro("O3_JOINTS_NUM", maxJoints.toString());
       }
     } else {
-      shaderData.disableMacro('O3_HAS_SKIN');
+      shaderData.disableMacro("O3_HAS_SKIN");
     }
   }
 
@@ -216,19 +200,10 @@ export class SkinnedMeshRenderer extends MeshRenderer {
       const engine = this.engine;
       const rhi = engine._hardwareRenderer;
       if (!rhi) return;
-      this.jointTexture = new Texture2D(
-        engine,
-        4,
-        this.jointNodes.length,
-        TextureFormat.R32G32B32A32,
-        false
-      );
+      this.jointTexture = new Texture2D(engine, 4, this.jointNodes.length, TextureFormat.R32G32B32A32, false);
       this.jointTexture.filterMode = TextureFilterMode.Point;
-      this.shaderData.enableMacro('O3_USE_JOINT_TEXTURE');
-      this.shaderData.setTexture(
-        SkinnedMeshRenderer._jointSamplerProperty,
-        this.jointTexture
-      );
+      this.shaderData.enableMacro("O3_USE_JOINT_TEXTURE");
+      this.shaderData.setTexture(SkinnedMeshRenderer._jointSamplerProperty, this.jointTexture);
     }
     this.jointTexture.setPixelBuffer(this.matrixPalette);
   }

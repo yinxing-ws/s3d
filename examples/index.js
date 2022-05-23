@@ -22,7 +22,7 @@ directLight.intensity = 0.4;
 
 // Create camera.
 const cameraEntity = rootEntity.createChild('Camera');
-cameraEntity.addComponent(Camera);
+window.camera = cameraEntity.addComponent(Camera);
 cameraEntity.transform.setPosition(0, 0, 12);
 
 // Create sphere.

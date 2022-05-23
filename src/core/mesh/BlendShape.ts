@@ -1,7 +1,7 @@
-import { BlendShapeFrame } from './BlendShapeFrame';
-import { Vector3 } from '@/math';
-import { UpdateFlag } from '../UpdateFlag';
-import { UpdateFlagManager } from '../UpdateFlagManager';
+import { BlendShapeFrame } from "./BlendShapeFrame";
+import { Vector3 } from "@/math";
+import { UpdateFlag } from "../UpdateFlag";
+import { UpdateFlagManager } from "../UpdateFlagManager";
 
 /**
  * BlendShape.
@@ -59,13 +59,8 @@ export class BlendShape {
     deltaNormals?: Vector3[],
     deltaTangents?: Vector3[]
   ): void | BlendShapeFrame {
-    if (typeof frameOrWeight === 'number') {
-      const frame = new BlendShapeFrame(
-        frameOrWeight,
-        deltaPositions,
-        deltaNormals,
-        deltaTangents
-      );
+    if (typeof frameOrWeight === "number") {
+      const frame = new BlendShapeFrame(frameOrWeight, deltaPositions, deltaNormals, deltaTangents);
       this._addFrame(frame);
       return frame;
     } else {
@@ -94,18 +89,12 @@ export class BlendShape {
   private _addFrame(frame: BlendShapeFrame): void {
     const frames = this._frames;
     const frameCount = frames.length;
-    if (
-      frameCount > 0 &&
-      frame.deltaPositions.length !==
-        frames[frameCount - 1].deltaPositions.length
-    ) {
+    if (frameCount > 0 && frame.deltaPositions.length !== frames[frameCount - 1].deltaPositions.length) {
       throw "Frame's deltaPositions length must same with before frame deltaPositions length.";
     }
 
-    this._useBlendShapeNormal =
-      this._useBlendShapeNormal || frame.deltaNormals !== null;
-    this._useBlendShapeTangent =
-      this._useBlendShapeTangent || frame.deltaTangents !== null;
+    this._useBlendShapeNormal = this._useBlendShapeNormal || frame.deltaNormals !== null;
+    this._useBlendShapeTangent = this._useBlendShapeTangent || frame.deltaTangents !== null;
     this._frames.push(frame);
   }
 }

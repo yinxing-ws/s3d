@@ -1,6 +1,6 @@
-import { GLCapabilityType } from '@/core';
-import { GLCompressedTextureInternalFormat } from './type';
-import { WebGLRenderer } from './WebGLRenderer';
+import { GLCapabilityType } from "@/core";
+import { GLCompressedTextureInternalFormat } from "./type";
+import { WebGLRenderer } from "./WebGLRenderer";
 
 type extensionKey = string;
 
@@ -19,9 +19,7 @@ export class GLCapability {
     return (
       this.canIUse(GLCapabilityType.shaderVertexID) &&
       this.canIUse(GLCapabilityType.textureFloat) &&
-      this.rhi.renderStates.getParameter(
-        this.rhi.gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS
-      ) > 0
+      this.rhi.renderStates.getParameter(this.rhi.gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS) > 0
     );
   }
 
@@ -31,18 +29,14 @@ export class GLCapability {
   get canIUseMoreJoints(): boolean {
     return (
       this.canIUse(GLCapabilityType.textureFloat) &&
-      this.rhi.renderStates.getParameter(
-        this.rhi.gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS
-      ) > 0
+      this.rhi.renderStates.getParameter(this.rhi.gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS) > 0
     );
   }
 
   get maxDrawBuffers() {
     if (!this._maxDrawBuffers) {
       if (this.canIUse(GLCapabilityType.drawBuffers)) {
-        this._maxDrawBuffers = this._rhi.gl.getParameter(
-          this._rhi.gl.MAX_DRAW_BUFFERS
-        );
+        this._maxDrawBuffers = this._rhi.gl.getParameter(this._rhi.gl.MAX_DRAW_BUFFERS);
       } else {
         this._maxDrawBuffers = 1;
       }
@@ -55,12 +49,8 @@ export class GLCapability {
    */
   get maxAnisoLevel(): number {
     if (!this._maxAnisoLevel) {
-      const ext = this._rhi.requireExtension(
-        GLCapabilityType.textureFilterAnisotropic
-      );
-      this._maxAnisoLevel = ext
-        ? this._rhi.gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)
-        : 1;
+      const ext = this._rhi.requireExtension(GLCapabilityType.textureFilterAnisotropic);
+      this._maxAnisoLevel = ext ? this._rhi.gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 1;
     }
     return this._maxAnisoLevel;
   }
@@ -100,9 +90,7 @@ export class GLCapability {
   /**
    * Check if can use some compressed texture format.
    */
-  canIUseCompressedTextureInternalFormat(
-    internalType: GLCompressedTextureInternalFormat
-  ): boolean {
+  canIUseCompressedTextureInternalFormat(internalType: GLCompressedTextureInternalFormat): boolean {
     const {
       // astc
       RGBA_ASTC_4X4_KHR,
@@ -119,31 +107,20 @@ export class GLCapability {
       RGBA_PVRTC_2BPPV1_IMG,
       // s3tc
       RGB_S3TC_DXT1_EXT,
-      RGBA_S3TC_DXT5_EXT,
+      RGBA_S3TC_DXT5_EXT
     } = GLCompressedTextureInternalFormat;
     if (
-      (internalType >= RGBA_ASTC_4X4_KHR &&
-        RGBA_ASTC_12X12_KHR <= RGBA_ASTC_12X12_KHR) ||
-      (internalType >= SRGB8_ALPHA8_ASTC_4X4_KHR &&
-        internalType <= SRGB8_ALPHA8_ASTC_12X12_KHR)
+      (internalType >= RGBA_ASTC_4X4_KHR && RGBA_ASTC_12X12_KHR <= RGBA_ASTC_12X12_KHR) ||
+      (internalType >= SRGB8_ALPHA8_ASTC_4X4_KHR && internalType <= SRGB8_ALPHA8_ASTC_12X12_KHR)
     ) {
       return this.canIUse(GLCapabilityType.astc);
     } else if (internalType === RGB_ETC1_WEBGL) {
       return this.canIUse(GLCapabilityType.etc1);
-    } else if (
-      internalType >= R11_EAC &&
-      internalType <= SRGB8_ALPHA8_ETC2_EAC
-    ) {
+    } else if (internalType >= R11_EAC && internalType <= SRGB8_ALPHA8_ETC2_EAC) {
       return this.canIUse(GLCapabilityType.etc);
-    } else if (
-      internalType >= RGB_PVRTC_4BPPV1_IMG &&
-      internalType <= RGBA_PVRTC_2BPPV1_IMG
-    ) {
+    } else if (internalType >= RGB_PVRTC_4BPPV1_IMG && internalType <= RGBA_PVRTC_2BPPV1_IMG) {
       return this.canIUse(GLCapabilityType.pvrtc);
-    } else if (
-      internalType >= RGB_S3TC_DXT1_EXT &&
-      internalType <= RGBA_S3TC_DXT5_EXT
-    ) {
+    } else if (internalType >= RGB_S3TC_DXT1_EXT && internalType <= RGBA_S3TC_DXT5_EXT) {
       return this.canIUse(GLCapabilityType.s3tc);
     }
     return false;
@@ -186,52 +163,35 @@ export class GLCapability {
       WEBGL_colorBufferFloat,
       colorBufferFloat,
       colorBufferHalfFloat,
-      textureFilterAnisotropic,
+      textureFilterAnisotropic
     } = GLCapabilityType;
     cap.set(shaderVertexID, isWebGL2);
-    cap.set(
-      standardDerivatives,
-      isWebGL2 || !!requireExtension(standardDerivatives)
-    );
+    cap.set(standardDerivatives, isWebGL2 || !!requireExtension(standardDerivatives));
     cap.set(shaderTextureLod, isWebGL2 || !!requireExtension(shaderTextureLod));
     cap.set(elementIndexUint, isWebGL2 || !!requireExtension(elementIndexUint));
     cap.set(depthTexture, isWebGL2 || !!requireExtension(depthTexture));
-    cap.set(
-      vertexArrayObject,
-      isWebGL2 || !!requireExtension(vertexArrayObject)
-    );
+    cap.set(vertexArrayObject, isWebGL2 || !!requireExtension(vertexArrayObject));
     cap.set(instancedArrays, isWebGL2 || !!requireExtension(instancedArrays));
     cap.set(multipleSample, isWebGL2);
     cap.set(drawBuffers, isWebGL2 || !!requireExtension(drawBuffers));
     cap.set(textureFloat, isWebGL2 || !!requireExtension(textureFloat));
     cap.set(textureHalfFloat, isWebGL2 || !!requireExtension(textureHalfFloat));
     cap.set(textureFloatLinear, !!requireExtension(textureFloatLinear));
-    cap.set(
-      textureHalfFloatLinear,
-      isWebGL2 || !!requireExtension(textureHalfFloatLinear)
-    );
+    cap.set(textureHalfFloatLinear, isWebGL2 || !!requireExtension(textureHalfFloatLinear));
     cap.set(
       colorBufferFloat,
-      (isWebGL2 && !!requireExtension(colorBufferFloat)) ||
-        !!requireExtension(WEBGL_colorBufferFloat)
+      (isWebGL2 && !!requireExtension(colorBufferFloat)) || !!requireExtension(WEBGL_colorBufferFloat)
     );
     cap.set(
       colorBufferHalfFloat,
-      (isWebGL2 && !!requireExtension(colorBufferFloat)) ||
-        !!requireExtension(colorBufferHalfFloat)
+      (isWebGL2 && !!requireExtension(colorBufferFloat)) || !!requireExtension(colorBufferHalfFloat)
     );
-    cap.set(
-      textureFilterAnisotropic,
-      !!requireExtension(textureFilterAnisotropic)
-    );
+    cap.set(textureFilterAnisotropic, !!requireExtension(textureFilterAnisotropic));
 
     cap.set(astc, !!(requireExtension(astc) || requireExtension(astc_webkit)));
     cap.set(etc, !!(requireExtension(etc) || requireExtension(etc_webkit)));
     cap.set(etc1, !!(requireExtension(etc1) || requireExtension(etc1_webkit)));
-    cap.set(
-      pvrtc,
-      !!(requireExtension(pvrtc) || requireExtension(pvrtc_webkit))
-    );
+    cap.set(pvrtc, !!(requireExtension(pvrtc) || requireExtension(pvrtc_webkit)));
     cap.set(s3tc, !!(requireExtension(s3tc) || requireExtension(s3tc_webkit)));
   }
 
@@ -243,10 +203,7 @@ export class GLCapability {
    * })
    * gl.UNSIGNED_INT_24_8 = ext.UNSIGNED_INT_24_8_WEBGL
    */
-  private _compatibleInterface(
-    capabilityType: GLCapabilityType,
-    flatItem: { [glKey: string]: extensionKey }
-  ) {
+  private _compatibleInterface(capabilityType: GLCapabilityType, flatItem: { [glKey: string]: extensionKey }) {
     const rhi = this.rhi;
     const gl = rhi.gl;
     let ext = null;
@@ -275,54 +232,53 @@ export class GLCapability {
       textureFilterAnisotropic,
       textureHalfFloat,
       colorBufferHalfFloat,
-      WEBGL_colorBufferFloat,
+      WEBGL_colorBufferFloat
     } = GLCapabilityType;
     const { isWebGL2 } = this.rhi;
 
     if (!isWebGL2) {
       this._compatibleInterface(depthTexture, {
-        UNSIGNED_INT_24_8: 'UNSIGNED_INT_24_8_WEBGL',
+        UNSIGNED_INT_24_8: "UNSIGNED_INT_24_8_WEBGL"
       });
       this._compatibleInterface(vertexArrayObject, {
-        createVertexArray: 'createVertexArrayOES',
-        deleteVertexArray: 'deleteVertexArrayOES',
-        isVertexArray: 'isVertexArrayOES',
-        bindVertexArray: 'bindVertexArrayOES',
+        createVertexArray: "createVertexArrayOES",
+        deleteVertexArray: "deleteVertexArrayOES",
+        isVertexArray: "isVertexArrayOES",
+        bindVertexArray: "bindVertexArrayOES"
       });
       this._compatibleInterface(instancedArrays, {
-        drawArraysInstanced: 'drawArraysInstancedANGLE',
-        drawElementsInstanced: 'drawElementsInstancedANGLE',
-        vertexAttribDivisor: 'vertexAttribDivisorANGLE',
+        drawArraysInstanced: "drawArraysInstancedANGLE",
+        drawElementsInstanced: "drawElementsInstancedANGLE",
+        vertexAttribDivisor: "vertexAttribDivisorANGLE"
       });
       this._compatibleInterface(drawBuffers, {
-        MAX_DRAW_BUFFERS: 'MAX_DRAW_BUFFERS_WEBGL',
+        MAX_DRAW_BUFFERS: "MAX_DRAW_BUFFERS_WEBGL"
       });
       const items = {};
       if (this.canIUse(GLCapabilityType.drawBuffers)) {
         const maxDrawBuffers = this.maxDrawBuffers;
         for (let i = 0; i < maxDrawBuffers; i++) {
-          i != 0 &&
-            (items[`COLOR_ATTACHMENT${i}`] = `COLOR_ATTACHMENT${i}_WEBGL`);
+          i != 0 && (items[`COLOR_ATTACHMENT${i}`] = `COLOR_ATTACHMENT${i}_WEBGL`);
           items[`DRAW_BUFFER${i}`] = `DRAW_BUFFER${i}_WEBGL`;
         }
         this._compatibleInterface(drawBuffers, {
-          drawBuffers: 'drawBuffersWEBGL',
-          ...items,
+          drawBuffers: "drawBuffersWEBGL",
+          ...items
         });
       }
       this._compatibleInterface(textureHalfFloat, {
-        HAFL_FLOAT: 'HALF_FLOAT_OES',
+        HAFL_FLOAT: "HALF_FLOAT_OES"
       });
       this._compatibleInterface(colorBufferHalfFloat, {
-        RGBA16F: 'RBGA16F_EXT',
+        RGBA16F: "RBGA16F_EXT"
       });
       this._compatibleInterface(WEBGL_colorBufferFloat, {
-        RGBA32F: 'RBGA32F_EXT',
+        RGBA32F: "RBGA32F_EXT"
       });
     }
 
     this._compatibleInterface(textureFilterAnisotropic, {
-      TEXTURE_MAX_ANISOTROPY_EXT: 'TEXTURE_MAX_ANISOTROPY_EXT',
+      TEXTURE_MAX_ANISOTROPY_EXT: "TEXTURE_MAX_ANISOTROPY_EXT"
     });
   }
 }

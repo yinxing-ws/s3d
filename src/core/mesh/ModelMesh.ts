@@ -1,18 +1,18 @@
-import { Color, Vector2, Vector3, Vector4 } from '@/math';
-import { Mesh } from '../graphic/Mesh';
-import { Buffer } from '../graphic/Buffer';
-import { Engine } from '../Engine';
-import { IndexFormat } from '../graphic/enums/IndexFormat';
-import { VertexElementFormat } from '../graphic/enums/VertexElementFormat';
-import { VertexElement } from '../graphic/VertexElement';
-import { BufferUsage } from '../graphic/enums/BufferUsage';
-import { BufferBindFlag } from '../graphic/enums/BufferBindFlag';
-import { VertexBufferBinding } from '../graphic/VertexBufferBinding';
-import { IndexBufferBinding } from '../graphic';
-import { BlendShape } from './BlendShape';
-import { UpdateFlag } from '../UpdateFlag';
-import { Texture2D } from '../texture/Texture2D';
-import { TextureFilterMode, TextureFormat } from '../texture';
+import { Color, Vector2, Vector3, Vector4 } from "@/math";
+import { Mesh } from "../graphic/Mesh";
+import { Buffer } from "../graphic/Buffer";
+import { Engine } from "../Engine";
+import { IndexFormat } from "../graphic/enums/IndexFormat";
+import { VertexElementFormat } from "../graphic/enums/VertexElementFormat";
+import { VertexElement } from "../graphic/VertexElement";
+import { BufferUsage } from "../graphic/enums/BufferUsage";
+import { BufferBindFlag } from "../graphic/enums/BufferBindFlag";
+import { VertexBufferBinding } from "../graphic/VertexBufferBinding";
+import { IndexBufferBinding } from "../graphic";
+import { BlendShape } from "./BlendShape";
+import { UpdateFlag } from "../UpdateFlag";
+import { Texture2D } from "../texture/Texture2D";
+import { TextureFilterMode, TextureFormat } from "../texture";
 
 /**
  * Mesh containing common vertex elements of the model.
@@ -75,7 +75,7 @@ export class ModelMesh extends Mesh {
    */
   get blendShapes(): Readonly<BlendShape[]> {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._blendShapes;
   }
@@ -96,7 +96,7 @@ export class ModelMesh extends Mesh {
    */
   setPositions(positions: Vector3[]): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     const count = positions.length;
@@ -114,7 +114,7 @@ export class ModelMesh extends Mesh {
    */
   getPositions(): Vector3[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     return this._positions;
@@ -126,11 +126,11 @@ export class ModelMesh extends Mesh {
    */
   setNormals(normals: Vector3[] | null): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (normals.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     this._vertexSlotChanged = !!this._normals !== !!normals;
@@ -144,7 +144,7 @@ export class ModelMesh extends Mesh {
    */
   getNormals(): Vector3[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._normals;
   }
@@ -155,11 +155,11 @@ export class ModelMesh extends Mesh {
    */
   setColors(colors: Color[] | null): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (colors.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     this._vertexSlotChanged = !!this._colors !== !!colors;
@@ -173,7 +173,7 @@ export class ModelMesh extends Mesh {
    */
   getColors(): Color[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._colors;
   }
@@ -184,11 +184,11 @@ export class ModelMesh extends Mesh {
    */
   setBoneWeights(boneWeights: Vector4[] | null): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (boneWeights.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     this._vertexSlotChanged = boneWeights != null;
@@ -202,7 +202,7 @@ export class ModelMesh extends Mesh {
    */
   getBoneWeights(): Vector4[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._boneWeights;
   }
@@ -213,11 +213,11 @@ export class ModelMesh extends Mesh {
    */
   setBoneIndices(boneIndices: Vector4[] | null): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (boneIndices.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     this._vertexSlotChanged = !!this._boneIndices !== !!boneIndices;
@@ -231,7 +231,7 @@ export class ModelMesh extends Mesh {
    */
   getBoneIndices(): Vector4[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._boneIndices;
   }
@@ -242,11 +242,11 @@ export class ModelMesh extends Mesh {
    */
   setTangents(tangents: Vector4[] | null): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (tangents.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     this._vertexSlotChanged = !!this._tangents !== !!tangents;
@@ -260,7 +260,7 @@ export class ModelMesh extends Mesh {
    */
   getTangents(): Vector4[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._tangents;
   }
@@ -278,11 +278,11 @@ export class ModelMesh extends Mesh {
   setUVs(uv: Vector2[] | null, channelIndex: number): void;
   setUVs(uv: Vector2[] | null, channelIndex?: number): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (uv.length !== this._vertexCount) {
-      throw 'The array provided needs to be the same size as vertex count.';
+      throw "The array provided needs to be the same size as vertex count.";
     }
 
     channelIndex = channelIndex ?? 0;
@@ -328,7 +328,7 @@ export class ModelMesh extends Mesh {
         this._uv7 = uv;
         break;
       default:
-        throw 'The index of channel needs to be in range [0 - 7].';
+        throw "The index of channel needs to be in range [0 - 7].";
     }
   }
 
@@ -345,7 +345,7 @@ export class ModelMesh extends Mesh {
   getUVs(channelIndex: number): Vector2[] | null;
   getUVs(channelIndex?: number): Vector2[] | null {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     channelIndex = channelIndex ?? 0;
     switch (channelIndex) {
@@ -366,7 +366,7 @@ export class ModelMesh extends Mesh {
       case 7:
         return this._uv7;
     }
-    throw 'The index of channel needs to be in range [0 - 7].';
+    throw "The index of channel needs to be in range [0 - 7].";
   }
 
   /**
@@ -375,7 +375,7 @@ export class ModelMesh extends Mesh {
    */
   setIndices(indices: Uint8Array | Uint16Array | Uint32Array): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     if (this._indices !== indices) {
@@ -397,7 +397,7 @@ export class ModelMesh extends Mesh {
    */
   getIndices(): Uint8Array | Uint16Array | Uint32Array {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     return this._indices;
   }
@@ -408,14 +408,12 @@ export class ModelMesh extends Mesh {
    */
   addBlendShape(blendShape: BlendShape): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     this._vertexChangeFlag |= ValueChanged.BlendShape;
-    this._useBlendShapeNormal =
-      this._useBlendShapeNormal || blendShape._useBlendShapeNormal;
-    this._useBlendShapeTangent =
-      this._useBlendShapeTangent || blendShape._useBlendShapeTangent;
+    this._useBlendShapeNormal = this._useBlendShapeNormal || blendShape._useBlendShapeNormal;
+    this._useBlendShapeTangent = this._useBlendShapeTangent || blendShape._useBlendShapeTangent;
     this._blendShapes.push(blendShape);
     this._blendShapeUpdateFlags.push(blendShape._registerChangeFlag());
     this._hasBlendShape = true;
@@ -426,7 +424,7 @@ export class ModelMesh extends Mesh {
    */
   clearBlendShapes(): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
     this._vertexChangeFlag |= ValueChanged.BlendShape;
     this._useBlendShapeNormal = false;
@@ -446,7 +444,7 @@ export class ModelMesh extends Mesh {
    */
   uploadData(noLongerAccessible: boolean): void {
     if (!this._accessible) {
-      throw 'Not allowed to access data while accessible is false.';
+      throw "Not allowed to access data while accessible is false.";
     }
 
     const { _indices } = this;
@@ -480,10 +478,7 @@ export class ModelMesh extends Mesh {
         noLongerAccessible ? BufferUsage.Static : BufferUsage.Dynamic
       );
 
-      this._setVertexBufferBinding(
-        0,
-        new VertexBufferBinding(newVertexBuffer, elementCount * 4)
-      );
+      this._setVertexBufferBinding(0, new VertexBufferBinding(newVertexBuffer, elementCount * 4));
     } else if (this._vertexChangeFlag & ValueChanged.All) {
       const vertices = this._verticesFloat32;
       this._updateVertices(vertices);
@@ -494,21 +489,13 @@ export class ModelMesh extends Mesh {
     if (_indices) {
       if (!indexBuffer || _indices.byteLength != indexBuffer.byteLength) {
         indexBuffer?.destroy();
-        const newIndexBuffer = new Buffer(
-          this._engine,
-          BufferBindFlag.IndexBuffer,
-          _indices
-        );
-        this._setIndexBufferBinding(
-          new IndexBufferBinding(newIndexBuffer, this._indicesFormat)
-        );
+        const newIndexBuffer = new Buffer(this._engine, BufferBindFlag.IndexBuffer, _indices);
+        this._setIndexBufferBinding(new IndexBufferBinding(newIndexBuffer, this._indicesFormat));
       } else if (this._indicesChangeFlag) {
         this._indicesChangeFlag = false;
         indexBuffer.setData(_indices);
         if (this._indexBufferBinding._format !== this._indicesFormat) {
-          this._setIndexBufferBinding(
-            new IndexBufferBinding(indexBuffer, this._indicesFormat)
-          );
+          this._setIndexBufferBinding(new IndexBufferBinding(indexBuffer, this._indicesFormat));
         }
       }
     } else if (indexBuffer) {
@@ -539,130 +526,83 @@ export class ModelMesh extends Mesh {
     let offset = 12;
     let elementCount = 3;
     if (this._normals) {
-      vertexElements.push(
-        new VertexElement('NORMAL', offset, VertexElementFormat.Vector3, 0)
-      );
+      vertexElements.push(new VertexElement("NORMAL", offset, VertexElementFormat.Vector3, 0));
       offset += 12;
       elementCount += 3;
     }
     if (this._colors) {
-      vertexElements.push(
-        new VertexElement('COLOR_0', offset, VertexElementFormat.Vector4, 0)
-      );
+      vertexElements.push(new VertexElement("COLOR_0", offset, VertexElementFormat.Vector4, 0));
       offset += 16;
       elementCount += 4;
     }
     if (this._boneWeights) {
-      vertexElements.push(
-        new VertexElement('WEIGHTS_0', offset, VertexElementFormat.Vector4, 0)
-      );
+      vertexElements.push(new VertexElement("WEIGHTS_0", offset, VertexElementFormat.Vector4, 0));
       offset += 16;
       elementCount += 4;
     }
     if (this._boneIndices) {
-      vertexElements.push(
-        new VertexElement('JOINTS_0', offset, VertexElementFormat.UByte4, 0)
-      );
+      vertexElements.push(new VertexElement("JOINTS_0", offset, VertexElementFormat.UByte4, 0));
       offset += 4;
       elementCount += 1;
     }
     if (this._tangents) {
-      vertexElements.push(
-        new VertexElement('TANGENT', offset, VertexElementFormat.Vector4, 0)
-      );
+      vertexElements.push(new VertexElement("TANGENT", offset, VertexElementFormat.Vector4, 0));
       offset += 16;
       elementCount += 4;
     }
     if (this._uv) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_0', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_0", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv1) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_1', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_1", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv2) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_2', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_2", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv3) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_3', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_3", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv4) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_4', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_4", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv5) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_5', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_5", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv6) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_6', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_6", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
     if (this._uv7) {
-      vertexElements.push(
-        new VertexElement('TEXCOORD_7', offset, VertexElementFormat.Vector2, 0)
-      );
+      vertexElements.push(new VertexElement("TEXCOORD_7", offset, VertexElementFormat.Vector2, 0));
       offset += 8;
       elementCount += 2;
     }
 
     const blendShapeCount = Math.min(this._blendShapes.length, 4);
     for (let i = 0, n = blendShapeCount; i < n; i++) {
-      vertexElements.push(
-        new VertexElement(
-          `POSITION_BS${i}`,
-          offset,
-          VertexElementFormat.Vector3,
-          0
-        )
-      );
+      vertexElements.push(new VertexElement(`POSITION_BS${i}`, offset, VertexElementFormat.Vector3, 0));
       offset += 12;
       elementCount += 3;
       if (this._useBlendShapeNormal) {
-        vertexElements.push(
-          new VertexElement(
-            `NORMAL_BS${i}`,
-            offset,
-            VertexElementFormat.Vector3,
-            0
-          )
-        );
+        vertexElements.push(new VertexElement(`NORMAL_BS${i}`, offset, VertexElementFormat.Vector3, 0));
         offset += 12;
         elementCount += 3;
       }
       if (this._useBlendShapeTangent) {
-        vertexElements.push(
-          new VertexElement(
-            `TANGENT_BS${i}`,
-            offset,
-            VertexElementFormat.Vector3,
-            0
-          )
-        );
+        vertexElements.push(new VertexElement(`TANGENT_BS${i}`, offset, VertexElementFormat.Vector3, 0));
         offset += 12;
         elementCount += 3;
       }
@@ -884,20 +824,12 @@ export class ModelMesh extends Mesh {
         this._useBlendShapeNormal && stride++;
         this._useBlendShapeTangent && stride++;
 
-        const maxTextureSize = rhi.renderStates.getParameter(
-          rhi.gl.MAX_TEXTURE_SIZE
-        );
+        const maxTextureSize = rhi.renderStates.getParameter(rhi.gl.MAX_TEXTURE_SIZE);
         const pixelCount = this._vertexCount * stride;
         const height = Math.ceil(pixelCount / maxTextureSize);
         const width = height > 1 ? maxTextureSize : pixelCount;
 
-        this._blendShapeTexture = new Texture2D(
-          this.engine,
-          0,
-          0,
-          TextureFormat.R32G32B32A32,
-          false
-        );
+        this._blendShapeTexture = new Texture2D(this.engine, 0, 0, TextureFormat.R32G32B32A32, false);
         this._blendShapeTexture.filterMode = TextureFilterMode.Point;
       } else {
         for (let i = 0; i < blendShapeCount; i++) {
@@ -907,11 +839,8 @@ export class ModelMesh extends Mesh {
             const { frames } = blendShape;
             const frameCount = frames.length;
             const endFrame = frames[frameCount - 1];
-            if (
-              frameCount > 0 &&
-              endFrame.deltaPositions.length !== this._vertexCount
-            ) {
-              throw 'BlendShape frame deltaPositions length must same with mesh vertexCount.';
+            if (frameCount > 0 && endFrame.deltaPositions.length !== this._vertexCount) {
+              throw "BlendShape frame deltaPositions length must same with mesh vertexCount.";
             }
 
             const { deltaPositions } = endFrame;
@@ -992,12 +921,7 @@ export class ModelMesh extends Mesh {
   }
 }
 
-const POSITION_VERTEX_ELEMENT = new VertexElement(
-  'POSITION',
-  0,
-  VertexElementFormat.Vector3,
-  0
-);
+const POSITION_VERTEX_ELEMENT = new VertexElement("POSITION", 0, VertexElementFormat.Vector3, 0);
 
 enum ValueChanged {
   Position = 0x1,
@@ -1015,5 +939,5 @@ enum ValueChanged {
   UV6 = 0x1000,
   UV7 = 0x2000,
   BlendShape = 0x4000,
-  All = 0xffff,
+  All = 0xffff
 }

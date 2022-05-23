@@ -175,7 +175,7 @@ export class RenderQueue {
   /**
    * @remarks
    * Modified based on v8.
-   * https://github.com/v8/v8/blob/7.2-lkgr/@/js/array.js
+   * https://github.com/v8/v8/blob/7.2-lkgr/src/js/array.js
    */
   private _quickSort<T>(a: T[], from: number, to: number, compareFunc: Function): void {
     while (true) {

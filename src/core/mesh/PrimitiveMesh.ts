@@ -1,7 +1,7 @@
-import { Vector2, Vector3 } from '@/math';
-import { GLCapabilityType } from '../base/Constant';
-import { Engine } from '../Engine';
-import { ModelMesh } from './ModelMesh';
+import { Vector2, Vector3 } from "@/math";
+import { GLCapabilityType } from "../base/Constant";
+import { Engine } from "../Engine";
+import { ModelMesh } from "./ModelMesh";
 
 /**
  * Used to generate common primitive meshes.
@@ -27,11 +27,7 @@ export class PrimitiveMesh {
     const count = segments + 1;
     const vertexCount = count * count;
     const rectangleCount = segments * segments;
-    const indices = PrimitiveMesh._generateIndices(
-      engine,
-      vertexCount,
-      rectangleCount * 6
-    );
+    const indices = PrimitiveMesh._generateIndices(engine, vertexCount, rectangleCount * 6);
     const thetaRange = Math.PI;
     const alphaRange = thetaRange * 2;
     const countReciprocal = 1.0 / count;
@@ -84,14 +80,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-radius, -radius, -radius);
     bounds.max.setValue(radius, radius, radius);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -220,14 +209,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-halfWidth, -halfHeight, -halfDepth);
     bounds.max.setValue(halfWidth, halfHeight, halfDepth);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -261,11 +243,7 @@ export class PrimitiveMesh {
     const gridHeight = height / verticalSegments;
     const vertexCount = horizontalCount * verticalCount;
     const rectangleCount = verticalSegments * horizontalSegments;
-    const indices = PrimitiveMesh._generateIndices(
-      engine,
-      vertexCount,
-      rectangleCount * 6
-    );
+    const indices = PrimitiveMesh._generateIndices(engine, vertexCount, rectangleCount * 6);
     const horizontalCountReciprocal = 1.0 / horizontalCount;
     const horizontalSegmentsReciprocal = 1.0 / horizontalSegments;
     const verticalSegmentsReciprocal = 1.0 / verticalSegments;
@@ -279,18 +257,11 @@ export class PrimitiveMesh {
       const z = (i * horizontalCountReciprocal) | 0;
 
       // Position
-      positions[i] = new Vector3(
-        x * gridWidth - halfWidth,
-        0,
-        z * gridHeight - halfHeight
-      );
+      positions[i] = new Vector3(x * gridWidth - halfWidth, 0, z * gridHeight - halfHeight);
       // Normal
       normals[i] = new Vector3(0, 1, 0);
       // Texcoord
-      uvs[i] = new Vector2(
-        x * horizontalSegmentsReciprocal,
-        z * verticalSegmentsReciprocal
-      );
+      uvs[i] = new Vector2(x * horizontalSegmentsReciprocal, z * verticalSegmentsReciprocal);
     }
 
     let offset = 0;
@@ -315,14 +286,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-halfWidth, 0, -halfHeight);
     bounds.max.setValue(halfWidth, 0, halfHeight);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -449,10 +413,7 @@ export class PrimitiveMesh {
       // Bottom normal
       normals[offset] = new Vector3(0, -1, 0);
       // Bottom texcoord
-      uvs[offset++] = new Vector2(
-        curPosX * diameterBottomReciprocal + 0.5,
-        0.5 - curPosZ * diameterBottomReciprocal
-      );
+      uvs[offset++] = new Vector2(curPosX * diameterBottomReciprocal + 0.5, 0.5 - curPosZ * diameterBottomReciprocal);
 
       const curPosTop = positions[i + positionStride];
       curPosX = curPosTop.x;
@@ -463,10 +424,7 @@ export class PrimitiveMesh {
       // Top normal
       normals[offset] = new Vector3(0, 1, 0);
       // Top texcoord
-      uvs[offset++] = new Vector2(
-        curPosX * diameterTopReciprocal + 0.5,
-        curPosZ * diameterTopReciprocal + 0.5
-      );
+      uvs[offset++] = new Vector2(curPosX * diameterTopReciprocal + 0.5, curPosZ * diameterTopReciprocal + 0.5);
     }
 
     // Add cap indices
@@ -493,14 +451,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-radiusMax, -halfHeight, -radiusMax);
     bounds.max.setValue(radiusMax, halfHeight, radiusMax);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -530,11 +481,7 @@ export class PrimitiveMesh {
 
     const vertexCount = (radialSegments + 1) * (tubularSegments + 1);
     const rectangleCount = radialSegments * tubularSegments;
-    const indices = PrimitiveMesh._generateIndices(
-      engine,
-      vertexCount,
-      rectangleCount * 6
-    );
+    const indices = PrimitiveMesh._generateIndices(engine, vertexCount, rectangleCount * 6);
 
     const positions: Vector3[] = new Array(vertexCount);
     const normals: Vector3[] = new Array(vertexCount);
@@ -562,11 +509,7 @@ export class PrimitiveMesh {
 
         const centerX = radius * cosU;
         const centerY = radius * sinU;
-        normals[offset] = new Vector3(
-          position.x - centerX,
-          position.y - centerY,
-          position.z
-        ).normalize();
+        normals[offset] = new Vector3(position.x - centerX, position.y - centerY, position.z).normalize();
 
         uvs[offset++] = new Vector2(j / tubularSegments, i / radialSegments);
       }
@@ -595,14 +538,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-outerRadius, -outerRadius, -tubeRadius);
     bounds.max.setValue(outerRadius, outerRadius, tubeRadius);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -714,10 +650,7 @@ export class PrimitiveMesh {
       // Bottom normal
       normals[offset] = new Vector3(0, -1, 0);
       // Bottom texcoord
-      uvs[offset++] = new Vector2(
-        curPosX * diameterBottomReciprocal + 0.5,
-        0.5 - curPosZ * diameterBottomReciprocal
-      );
+      uvs[offset++] = new Vector2(curPosX * diameterBottomReciprocal + 0.5, 0.5 - curPosZ * diameterBottomReciprocal);
     }
 
     const bottomIndiceIndex = torsoVertexCount + 1;
@@ -735,14 +668,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-radius, -halfHeight, -radius);
     bounds.max.setValue(radius, halfHeight, radius);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -809,11 +735,7 @@ export class PrimitiveMesh {
       const sinTheta = Math.sin(theta);
       const cosTheta = Math.cos(theta);
 
-      positions[i] = new Vector3(
-        radius * sinTheta,
-        y * unitHeight - halfHeight,
-        radius * cosTheta
-      );
+      positions[i] = new Vector3(radius * sinTheta, y * unitHeight - halfHeight, radius * cosTheta);
       normals[i] = new Vector3(sinTheta, 0, cosTheta);
       uvs[i] = new Vector2(u, 1 - v);
     }
@@ -867,14 +789,7 @@ export class PrimitiveMesh {
     bounds.min.setValue(-radius, -radius - halfHeight, -radius);
     bounds.max.setValue(radius, radius + halfHeight, radius);
 
-    PrimitiveMesh._initialize(
-      mesh,
-      positions,
-      normals,
-      uvs,
-      indices,
-      noLongerAccessible
-    );
+    PrimitiveMesh._initialize(mesh, positions, normals, uvs, indices, noLongerAccessible);
     return mesh;
   }
 
@@ -895,17 +810,13 @@ export class PrimitiveMesh {
     mesh.addSubMesh(0, indices.length);
   }
 
-  private static _generateIndices(
-    engine: Engine,
-    vertexCount: number,
-    indexCount: number
-  ): Uint16Array | Uint32Array {
+  private static _generateIndices(engine: Engine, vertexCount: number, indexCount: number): Uint16Array | Uint32Array {
     let indices: Uint16Array | Uint32Array = null;
     if (vertexCount > 65535) {
       if (engine._hardwareRenderer.canIUse(GLCapabilityType.elementIndexUint)) {
         indices = new Uint32Array(indexCount);
       } else {
-        throw Error('The vertex count is over limit.');
+        throw Error("The vertex count is over limit.");
       }
     } else {
       indices = new Uint16Array(indexCount);

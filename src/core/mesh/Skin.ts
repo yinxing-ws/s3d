@@ -1,5 +1,6 @@
-import { Matrix } from '@/math';
-import { EngineObject } from '../base/EngineObject';
+import { Matrix } from "@/math";
+import { EngineObject } from "../base/EngineObject";
+import { Entity } from "../Entity";
 
 /**
  * Mesh skin data, equal glTF skins define
@@ -16,6 +17,6 @@ export class Skin extends EngineObject {
     super(null);
     this.inverseBindMatrices = []; // inverse bind matrix array
     this.joints = []; // joints name array, element type: string
-    this.skeleton = 'none'; // root bone name
+    this.skeleton = "none"; // root bone name
   }
 }
