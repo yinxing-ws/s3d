@@ -1,2 +1,2 @@
-export { Entity } from './core/Entity';
-export { Engine } from './core/Engine';
+export * from '@/math';
+export * from '@/core';
