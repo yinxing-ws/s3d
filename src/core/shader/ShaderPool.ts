@@ -20,6 +20,8 @@ import backgroundTextureVs from '../shaderlib/extra/background-texture.vs.glsl';
 import backgroundTextureFs from '../shaderlib/extra/background-texture.fs.glsl';
 import unityStandardFs from '../shaderlib/unity/standard.fs.glsl';
 import unityStandardVs from '../shaderlib/unity/standard.vs.glsl';
+import postEffectVs from '../shaderlib/extra/post-effect.vs.glsl';
+import postEffectFs from '../shaderlib/extra/post-effect.fs.glsl';
 import { Shader } from './Shader';
 
 /**
@@ -39,10 +41,7 @@ export class ShaderPool {
     Shader.create('particle-shader', particleVs, particleFs);
     Shader.create('SpriteMask', spriteMaskVs, spriteMaskFs);
     Shader.create('Sprite', spriteVs, spriteFs);
-    Shader.create(
-      'background-texture',
-      backgroundTextureVs,
-      backgroundTextureFs
-    );
+    Shader.create('background-texture', backgroundTextureVs, backgroundTextureFs);
+    Shader.create('post-effect', postEffectVs, postEffectFs);
   }
 }

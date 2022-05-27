@@ -1,31 +1,34 @@
-import { Matrix, Vector2 } from "@/math";
-import { Background } from "..";
-import { SpriteMask } from "../2d/sprite/SpriteMask";
-import { Logger } from "../base/Logger";
-import { Camera } from "../Camera";
-import { DisorderedArray } from "../DisorderedArray";
-import { Engine } from "../Engine";
-import { BackgroundMode } from "../enums/BackgroundMode";
-import { BackgroundTextureFillMode } from "../enums/BackgroundTextureFillMode";
-import { CameraClearFlags } from "../enums/CameraClearFlags";
-import { Layer } from "../Layer";
-import { RenderQueueType } from "../material/enums/RenderQueueType";
-import { Material } from "../material/Material";
-import { Shader } from "../shader/Shader";
-import { ShaderMacroCollection } from "../shader/ShaderMacroCollection";
-import { Sky } from "../sky/Sky";
-import { TextureCubeFace } from "../texture/enums/TextureCubeFace";
-import { RenderTarget } from "../texture/RenderTarget";
-import { RenderContext } from "./RenderContext";
-import { RenderElement } from "./RenderElement";
-import { RenderPass } from "./RenderPass";
-import { RenderQueue } from "./RenderQueue";
-import { SpriteElement } from "./SpriteElement";
+import { Matrix, Vector2 } from '@/math';
+import { Background } from '..';
+import { SpriteMask } from '../2d/sprite/SpriteMask';
+import { Logger } from '../base/Logger';
+import { Camera } from '../Camera';
+import { DisorderedArray } from '../DisorderedArray';
+import { Engine } from '../Engine';
+import { BackgroundMode } from '../enums/BackgroundMode';
+import { BackgroundTextureFillMode } from '../enums/BackgroundTextureFillMode';
+import { CameraClearFlags } from '../enums/CameraClearFlags';
+import { Layer } from '../Layer';
+import { RenderQueueType } from '../material/enums/RenderQueueType';
+import { Material } from '../material/Material';
+import { Shader } from '../shader/Shader';
+import { ShaderMacroCollection } from '../shader/ShaderMacroCollection';
+import { Sky } from '../sky/Sky';
+import { RenderColorTexture } from '../texture';
+import { TextureCubeFace } from '../texture/enums/TextureCubeFace';
+import { RenderTarget } from '../texture/RenderTarget';
+import { RenderContext } from './RenderContext';
+import { RenderElement } from './RenderElement';
+import { RenderPass } from './RenderPass';
+import { RenderQueue } from './RenderQueue';
+import { SpriteElement } from './SpriteElement';
+import { RenderBufferDepthFormat } from '../texture/enums/RenderBufferDepthFormat';
+import { PostEffectPass } from '../postEffect/PostEffectPass';
 
 /**
  * Basic render pipeline.
  */
-export class BasicRenderPipeline {
+export class SiverRenderPipeline {
   /** @internal */
   _opaqueQueue: RenderQueue;
   /** @internal */
@@ -34,6 +37,13 @@ export class BasicRenderPipeline {
   _alphaTestQueue: RenderQueue;
   /** @internal */
   _allSpriteMasks: DisorderedArray<SpriteMask> = new DisorderedArray();
+
+  /** @internal */
+  _preRenderTarget: RenderTarget;
+  /** @internal */
+  _preRenderTarget0: RenderTarget;
+  /** @internal */
+  _preRenderTarget1: RenderTarget;
 
   private _camera: Camera;
   private _defaultPass: RenderPass;
@@ -52,7 +62,31 @@ export class BasicRenderPipeline {
     this._transparentQueue = new RenderQueue(engine);
 
     this._renderPassArray = [];
-    this._defaultPass = new RenderPass("default", 0, null, null, 0);
+
+    const width = 2048;
+    const height = 2048;
+
+    this._preRenderTarget0 = new RenderTarget(
+      engine,
+      width,
+      height,
+      new RenderColorTexture(engine, width, height, undefined, undefined, false),
+      RenderBufferDepthFormat.Depth,
+      1
+    );
+
+    this._preRenderTarget1 = new RenderTarget(
+      engine,
+      width,
+      height,
+      new RenderColorTexture(engine, width, height, undefined, undefined, false),
+      RenderBufferDepthFormat.Depth,
+      1
+    );
+
+    this._preRenderTarget = this._preRenderTarget0;
+
+    this._defaultPass = new RenderPass('default', 0, null, 0);
     this.addRenderPass(this._defaultPass);
   }
 
@@ -74,12 +108,11 @@ export class BasicRenderPipeline {
   addRenderPass(
     nameOrPass: string | RenderPass,
     priority: number = null,
-    renderTarget: RenderTarget = null,
     replaceMaterial: Material = null,
     mask: Layer = null
   ) {
-    if (typeof nameOrPass === "string") {
-      const renderPass = new RenderPass(nameOrPass, priority, renderTarget, replaceMaterial, mask);
+    if (typeof nameOrPass === 'string') {
+      const renderPass = new RenderPass(nameOrPass, priority, replaceMaterial, mask);
       this._renderPassArray.push(renderPass);
     } else if (nameOrPass instanceof RenderPass) {
       this._renderPassArray.push(nameOrPass);
@@ -96,7 +129,7 @@ export class BasicRenderPipeline {
    */
   removeRenderPass(nameOrPass: string | RenderPass): void {
     let pass: RenderPass;
-    if (typeof nameOrPass === "string") pass = this.getRenderPass(nameOrPass);
+    if (typeof nameOrPass === 'string') pass = this.getRenderPass(nameOrPass);
     else if (nameOrPass instanceof RenderPass) pass = nameOrPass;
     if (pass) {
       const idx = this._renderPassArray.indexOf(pass);
@@ -154,19 +187,41 @@ export class BasicRenderPipeline {
     alphaTestQueue.sort(RenderQueue._compareFromNearToFar);
     transparentQueue.sort(RenderQueue._compareFromFarToNear);
 
+    // switch
+    this._preRenderTarget = this._preRenderTarget0;
     for (let i = 0, len = this._renderPassArray.length; i < len; i++) {
-      this._drawRenderPass(this._renderPassArray[i], camera, cubeFace, mipLevel);
+      this._drawRenderPass(this._renderPassArray[i], camera, i === len - 1, cubeFace, mipLevel);
+
+      // switch
+      this._preRenderTarget =
+        this._preRenderTarget === this._preRenderTarget0 ? this._preRenderTarget1 : this._preRenderTarget0;
     }
   }
 
-  private _drawRenderPass(pass: RenderPass, camera: Camera, cubeFace?: TextureCubeFace, mipLevel?: number) {
-    pass.preRender(camera, this._opaqueQueue, this._alphaTestQueue, this._transparentQueue);
+  private _drawRenderPass(
+    pass: RenderPass,
+    camera: Camera,
+    isLastPass: boolean,
+    cubeFace?: TextureCubeFace,
+    mipLevel?: number
+  ) {
+    const curRenderTarget =
+      this._preRenderTarget === this._preRenderTarget0 ? this._preRenderTarget1 : this._preRenderTarget0;
+
+    const queueData = {
+      opaqueQueue: this._opaqueQueue,
+      alphaTestQueue: this._alphaTestQueue,
+      transparentQueue: this._transparentQueue,
+    };
+
+    pass.preRender(camera, queueData, this._preRenderTarget);
 
     if (pass.enabled) {
       const { engine, scene } = camera;
       const { background } = scene;
       const rhi = engine._hardwareRenderer;
-      const renderTarget = camera.renderTarget || pass.renderTarget;
+
+      const renderTarget = isLastPass || pass.forceRenderCamera ? camera.renderTarget : curRenderTarget;
       rhi.activeRenderTarget(renderTarget, camera, mipLevel); // change viewport with mip level
       renderTarget?._setRenderTargetInfo(cubeFace, mipLevel);
       const clearFlags = pass.clearFlags ?? camera.clearFlags;
@@ -176,7 +231,7 @@ export class BasicRenderPipeline {
       }
 
       if (pass.renderOverride) {
-        pass.render(camera, this._opaqueQueue, this._alphaTestQueue, this._transparentQueue);
+        pass.render(camera, queueData, this._preRenderTarget);
       } else {
         this._opaqueQueue.render(camera, pass.replaceMaterial, pass.mask);
         this._alphaTestQueue.render(camera, pass.replaceMaterial, pass.mask);
@@ -194,7 +249,7 @@ export class BasicRenderPipeline {
       renderTarget?.generateMipmaps();
     }
 
-    pass.postRender(camera, this._opaqueQueue, this._alphaTestQueue, this._transparentQueue);
+    pass.postRender(camera, queueData, this._preRenderTarget);
   }
 
   /**
@@ -238,11 +293,11 @@ export class BasicRenderPipeline {
   private _drawSky(engine: Engine, camera: Camera, sky: Sky): void {
     const { material, mesh, _matrix } = sky;
     if (!material) {
-      Logger.warn("The material of sky is not defined.");
+      Logger.warn('The material of sky is not defined.');
       return;
     }
     if (!mesh) {
-      Logger.warn("The mesh of sky is not defined.");
+      Logger.warn('The mesh of sky is not defined.');
       return;
     }
 
@@ -257,7 +312,7 @@ export class BasicRenderPipeline {
     const e = _matrix.elements;
     e[12] = e[13] = e[14] = 0;
     Matrix.multiply(projectionMatrix, _matrix, _matrix);
-    shaderData.setMatrix("u_mvpNoscale", _matrix);
+    shaderData.setMatrix('u_mvpNoscale', _matrix);
 
     const program = shader._getShaderProgram(engine, compileMacros);
     program.bind();

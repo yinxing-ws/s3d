@@ -1,15 +1,16 @@
-import { Background } from "./Background";
-import { EngineObject, Logger } from "./base";
-import { Camera } from "./Camera";
-import { Engine } from "./Engine";
-import { Entity } from "./Entity";
-import { FeatureManager } from "./FeatureManager";
-import { AmbientLight } from "./lighting/AmbientLight";
-import { LightFeature } from "./lighting/LightFeature";
-import { SceneFeature } from "./SceneFeature";
-import { ShaderDataGroup } from "./shader/enums/ShaderDataGroup";
-import { ShaderData } from "./shader/ShaderData";
-import { ShaderMacroCollection } from "./shader/ShaderMacroCollection";
+import { Background } from './Background';
+import { EngineObject, Logger } from './base';
+import { Camera } from './Camera';
+import { Engine } from './Engine';
+import { Entity } from './Entity';
+import { FeatureManager } from './FeatureManager';
+import { AmbientLight } from './lighting/AmbientLight';
+import { LightFeature } from './lighting/LightFeature';
+import { PostEffect } from './postEffect/PostEffect';
+import { SceneFeature } from './SceneFeature';
+import { ShaderDataGroup } from './shader/enums/ShaderDataGroup';
+import { ShaderData } from './shader/ShaderData';
+import { ShaderMacroCollection } from './shader/ShaderMacroCollection';
 
 /**
  * Scene.
@@ -22,6 +23,8 @@ export class Scene extends EngineObject {
 
   /** The background of the scene. */
   readonly background: Background = new Background(this._engine);
+
+  readonly postEffect: PostEffect = new PostEffect(this._engine);
 
   /** Scene-related shader data. */
   readonly shaderData: ShaderData = new ShaderData(ShaderDataGroup.Scene);
@@ -45,7 +48,7 @@ export class Scene extends EngineObject {
 
   set ambientLight(value: AmbientLight) {
     if (!value) {
-      Logger.warn("The scene must have one ambient light");
+      Logger.warn('The scene must have one ambient light');
       return;
     }
 
@@ -78,7 +81,7 @@ export class Scene extends EngineObject {
    */
   constructor(engine: Engine, name?: string) {
     super(engine);
-    this.name = name || "";
+    this.name = name || '';
 
     const shaderData = this.shaderData;
     Scene.sceneFeatureManager.addObject(this);
@@ -181,7 +184,7 @@ export class Scene extends EngineObject {
    * @returns Entity
    */
   findEntityByPath(path: string): Entity | null {
-    const splits = path.split("/").filter(Boolean);
+    const splits = path.split('/').filter(Boolean);
     for (let i = 0, n = this.rootEntitiesCount; i < n; i++) {
       let findEntity = this.getRootEntity(i);
       if (findEntity.name != splits[0]) continue;
@@ -202,7 +205,7 @@ export class Scene extends EngineObject {
       return;
     }
     this._isActiveInEngine && (this._engine.sceneManager.activeScene = null);
-    Scene.sceneFeatureManager.callFeatureMethod(this, "destroy", [this]);
+    Scene.sceneFeatureManager.callFeatureMethod(this, 'destroy', [this]);
     for (let i = 0, n = this.rootEntitiesCount; i < n; i++) {
       this._rootEntities[i].destroy();
     }
@@ -220,7 +223,7 @@ export class Scene extends EngineObject {
     if (index === -1) {
       this._activeCameras.push(camera);
     } else {
-      Logger.warn("Camera already attached.");
+      Logger.warn('Camera already attached.');
     }
   }
 

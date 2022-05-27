@@ -1,21 +1,22 @@
-import { BoundingFrustum, MathUtil, Matrix, Ray, Vector2, Vector3, Vector4 } from "@/math";
-import { Logger } from "./base";
-import { deepClone, ignoreClone } from "./clone/CloneManager";
-import { Component } from "./Component";
-import { dependencies } from "./ComponentsDependencies";
-import { Entity } from "./Entity";
-import { CameraClearFlags } from "./enums/CameraClearFlags";
-import { Layer } from "./Layer";
-import { BasicRenderPipeline } from "./RenderPipeline/BasicRenderPipeline";
-import { RenderContext } from "./RenderPipeline/RenderContext";
-import { ShaderDataGroup } from "./shader/enums/ShaderDataGroup";
-import { Shader } from "./shader/Shader";
-import { ShaderData } from "./shader/ShaderData";
-import { ShaderMacroCollection } from "./shader/ShaderMacroCollection";
-import { TextureCubeFace } from "./texture/enums/TextureCubeFace";
-import { RenderTarget } from "./texture/RenderTarget";
-import { Transform } from "./Transform";
-import { UpdateFlag } from "./UpdateFlag";
+import { BoundingFrustum, MathUtil, Matrix, Ray, Vector2, Vector3, Vector4 } from '@/math';
+import { Logger } from './base';
+import { deepClone, ignoreClone } from './clone/CloneManager';
+import { Component } from './Component';
+import { dependencies } from './ComponentsDependencies';
+import { Entity } from './Entity';
+import { CameraClearFlags } from './enums/CameraClearFlags';
+import { Layer } from './Layer';
+import { SiverRenderPipeline } from './RenderPipeline/SiverRenderPipeline';
+import { RenderContext } from './RenderPipeline/RenderContext';
+import { ShaderDataGroup } from './shader/enums/ShaderDataGroup';
+import { Shader } from './shader/Shader';
+import { ShaderData } from './shader/ShaderData';
+import { ShaderMacroCollection } from './shader/ShaderMacroCollection';
+import { TextureCubeFace } from './texture/enums/TextureCubeFace';
+import { RenderTarget } from './texture/RenderTarget';
+import { Transform } from './Transform';
+import { UpdateFlag } from './UpdateFlag';
+import { PostEffectPass } from './postEffect/PostEffectPass';
 
 class MathTemp {
   static tempVec4 = new Vector4();
@@ -28,12 +29,12 @@ class MathTemp {
  */
 @dependencies(Transform)
 export class Camera extends Component {
-  private static _viewMatrixProperty = Shader.getPropertyByName("u_viewMat");
-  private static _projectionMatrixProperty = Shader.getPropertyByName("u_projMat");
-  private static _vpMatrixProperty = Shader.getPropertyByName("u_VPMat");
-  private static _inverseViewMatrixProperty = Shader.getPropertyByName("u_viewInvMat");
-  private static _inverseProjectionMatrixProperty = Shader.getPropertyByName("u_projInvMat");
-  private static _cameraPositionProperty = Shader.getPropertyByName("u_cameraPos");
+  private static _viewMatrixProperty = Shader.getPropertyByName('u_viewMat');
+  private static _projectionMatrixProperty = Shader.getPropertyByName('u_projMat');
+  private static _vpMatrixProperty = Shader.getPropertyByName('u_VPMat');
+  private static _inverseViewMatrixProperty = Shader.getPropertyByName('u_viewInvMat');
+  private static _inverseProjectionMatrixProperty = Shader.getPropertyByName('u_projInvMat');
+  private static _cameraPositionProperty = Shader.getPropertyByName('u_cameraPos');
 
   /** Shader data. */
   readonly shaderData: ShaderData = new ShaderData(ShaderDataGroup.Camera);
@@ -63,7 +64,7 @@ export class Camera extends Component {
   _frustum: BoundingFrustum = new BoundingFrustum();
   /** @internal */
   @ignoreClone
-  _renderPipeline: BasicRenderPipeline;
+  _renderPipeline: SiverRenderPipeline;
 
   private _isOrthographic: boolean = false;
   private _isProjMatSetting = false;
@@ -243,12 +244,12 @@ export class Camera extends Component {
    * @todo When render pipeline modification
    */
   get enableHDR(): boolean {
-    console.log("not implementation");
+    console.log('not implementation');
     return false;
   }
 
   set enableHDR(value: boolean) {
-    console.log("not implementation");
+    console.log('not implementation');
   }
 
   /**
@@ -274,8 +275,12 @@ export class Camera extends Component {
     this._isViewMatrixDirty = transform.registerWorldChangeFlag();
     this._isInvViewProjDirty = transform.registerWorldChangeFlag();
     this._frustumViewChangeFlag = transform.registerWorldChangeFlag();
-    this._renderPipeline = new BasicRenderPipeline(this);
+    this._renderPipeline = new SiverRenderPipeline(this);
     this.shaderData._addRefCount(1);
+  }
+
+  activePostEffect(): void {
+    this._renderPipeline.addRenderPass(new PostEffectPass('postEffect', 1));
   }
 
   /**
@@ -445,7 +450,7 @@ export class Camera extends Component {
 
     if (mipLevel > 0 && !this.engine._hardwareRenderer.isWebGL2) {
       mipLevel = 0;
-      Logger.error("mipLevel only take effect in WebGL2.0");
+      Logger.error('mipLevel only take effect in WebGL2.0');
     }
     this._renderPipeline.render(context, cubeFace, mipLevel);
     this._engine._renderCount++;

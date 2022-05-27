@@ -269,6 +269,7 @@ export class WebGLRenderer implements IHardwareRenderer {
       const height = drawingBufferHeight * viewport.w;
       const x = viewport.x * drawingBufferWidth;
       const y = drawingBufferHeight - viewport.y * drawingBufferHeight - height;
+
       this.viewport(x, y, width, height);
     }
   }

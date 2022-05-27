@@ -13,7 +13,7 @@
     "baseUrl": "./",
     "skipLibCheck": true,
     "paths": {
-      "src/*": ["src/*"] // 配置模块别名
+      "@/*": ["src/*"] // 配置模块别名
     }
   },
   "exclude": ["node_modules", "types", "packages/*/tests"]

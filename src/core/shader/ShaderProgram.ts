@@ -1,16 +1,16 @@
-import { Vector2, Vector3, Vector4 } from "@/math";
-import { Logger } from "../base/Logger";
-import { Camera } from "../Camera";
-import { Engine } from "../Engine";
-import { Material } from "../material/Material";
-import { Renderer } from "../Renderer";
-import { IHardwareRenderer } from "../renderingHardwareInterface/IHardwareRenderer";
-import { Texture } from "../texture";
-import { ShaderDataGroup } from "./enums/ShaderDataGroup";
-import { Shader } from "./Shader";
-import { ShaderData } from "./ShaderData";
-import { ShaderUniform } from "./ShaderUniform";
-import { ShaderUniformBlock } from "./ShaderUniformBlock";
+import { Vector2, Vector3, Vector4 } from '@/math';
+import { Logger } from '../base/Logger';
+import { Camera } from '../Camera';
+import { Engine } from '../Engine';
+import { Material } from '../material/Material';
+import { Renderer } from '../Renderer';
+import { IHardwareRenderer } from '../renderingHardwareInterface/IHardwareRenderer';
+import { Texture } from '../texture';
+import { ShaderDataGroup } from './enums/ShaderDataGroup';
+import { Shader } from './Shader';
+import { ShaderData } from './ShaderData';
+import { ShaderUniform } from './ShaderUniform';
+import { ShaderUniformBlock } from './ShaderUniformBlock';
 
 /**
  * Shader program, corresponding to the GPU shader program.
@@ -20,7 +20,7 @@ export class ShaderProgram {
   private static _counter: number = 0;
 
   private static _addLineNum(str: string) {
-    const lines = str.split("\n");
+    const lines = str.split('\n');
     const limitLength = (lines.length + 1).toString().length + 6;
     let prefix;
     return lines
@@ -28,11 +28,11 @@ export class ShaderProgram {
         prefix = `0:${index + 1}`;
         if (prefix.length >= limitLength) return prefix.substring(0, limitLength) + line;
 
-        for (let i = 0; i < limitLength - prefix.length; i++) prefix += " ";
+        for (let i = 0; i < limitLength - prefix.length; i++) prefix += ' ';
 
         return prefix + line;
       })
-      .join("\n");
+      .join('\n');
   }
 
   id: number;
@@ -138,6 +138,7 @@ export class ShaderProgram {
    */
   uploadUnGroupTextures(): void {
     const textureUniforms = this.otherUniformBlock.textureUniforms;
+
     // textureUniforms property maybe null if ShaderUniformBlock not contain any texture.
     if (textureUniforms) {
       for (let i = 0, n = textureUniforms.length; i < n; i++) {
@@ -256,14 +257,14 @@ export class ShaderProgram {
     gl.validateProgram(program);
 
     if (gl.isContextLost()) {
-      Logger.error("Context lost while linking program.");
+      Logger.error('Context lost while linking program.');
       gl.deleteShader(vertexShader);
       gl.deleteShader(fragmentShader);
       return null;
     }
 
     if (Logger.isEnabled && !gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      Logger.error("Could not link WebGL program. \n" + gl.getProgramInfoLog(program));
+      Logger.error('Could not link WebGL program. \n' + gl.getProgramInfoLog(program));
       gl.deleteProgram(program);
       return null;
     }
@@ -278,7 +279,7 @@ export class ShaderProgram {
     const shader = gl.createShader(shaderType);
 
     if (!shader) {
-      Logger.error("Context lost while create shader.");
+      Logger.error('Context lost while create shader.');
       return null;
     }
 
@@ -286,7 +287,7 @@ export class ShaderProgram {
     gl.compileShader(shader);
 
     if (gl.isContextLost()) {
-      Logger.error("Context lost while compiling shader.");
+      Logger.error('Context lost while compiling shader.');
       gl.deleteShader(shader);
       return null;
     }
@@ -317,7 +318,7 @@ export class ShaderProgram {
       let isArray = false;
       let isTexture = false;
 
-      if (name.indexOf("[0]") > 0) {
+      if (name.indexOf('[0]') > 0) {
         name = name.substr(0, name.length - 3);
         isArray = true;
       }
