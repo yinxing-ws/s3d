@@ -1,4 +1,4 @@
-import { AssetType, ResourceManager, SpriteAtlas } from "../../core";
+import { AssetType, ResourceManager, SpriteAtlas } from "../../../core";
 import { AssetConfig } from "../types";
 import { getAllGetters } from "../utils";
 import { SchemaResource } from "./SchemaResource";

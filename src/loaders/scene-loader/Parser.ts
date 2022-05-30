@@ -1,4 +1,4 @@
-import { Component } from "../core";
+import { Component } from "../../core";
 import { Oasis } from "./Oasis";
 import { Plugin } from "./plugins/Plugin";
 import { PluginManager } from "./plugins/PluginManager";

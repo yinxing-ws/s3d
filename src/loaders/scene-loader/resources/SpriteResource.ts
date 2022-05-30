@@ -1,4 +1,4 @@
-import { Logger, ResourceManager, Sprite, Texture } from "../../core";
+import { Logger, ResourceManager, Sprite, Texture } from "../../../core";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";
 import { getAllGetters, isAsset } from "../utils";
 import { SchemaResource } from "./SchemaResource";

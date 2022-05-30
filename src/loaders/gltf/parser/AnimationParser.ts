@@ -9,8 +9,8 @@ import {
   SkinnedMeshRenderer,
   Transform,
   TypedArray
-} from "../../core";
-import { Quaternion, Vector2, Vector3, Vector4 } from "../../math";
+} from "../../../core";
+import { Quaternion, Vector2, Vector3, Vector4 } from "../../../math";
 import { GLTFResource } from "../GLTFResource";
 import { GLTFUtil } from "../GLTFUtil";
 import { AccessorType, AnimationChannelTargetPath, AnimationSamplerInterpolation, IAnimationChannel } from "../Schema";

@@ -1,4 +1,4 @@
-import { Logger } from "../../core";
+import { Logger } from "../../../core";
 import { GLTFResource } from "../GLTFResource";
 import { Parser } from "./Parser";
 

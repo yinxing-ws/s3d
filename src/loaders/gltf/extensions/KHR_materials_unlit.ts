@@ -1,4 +1,4 @@
-import { UnlitMaterial } from "../../core";
+import { UnlitMaterial } from "../../../core";
 import { GLTFResource } from "../GLTFResource";
 import { registerExtension } from "../parser/Parser";
 import { ExtensionParser } from "./ExtensionParser";

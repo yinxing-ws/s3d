@@ -8,7 +8,7 @@ import {
   PBRSpecularMaterial,
   ResourceManager,
   UnlitMaterial
-} from "../../core";
+} from "../../../core";
 import { Oasis } from "../Oasis";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";
 import { BlinnPhongMaterialResource } from "./BlinnPhongMaterialResource";

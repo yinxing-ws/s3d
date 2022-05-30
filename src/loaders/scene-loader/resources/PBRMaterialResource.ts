@@ -1,4 +1,4 @@
-import { Logger, PBRMaterial, ResourceManager, Texture } from "../../core";
+import { Logger, PBRMaterial, ResourceManager, Texture } from "../../../core";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";
 import { isAsset } from "../utils";
 import { SchemaResource } from "./SchemaResource";

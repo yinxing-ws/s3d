@@ -1,4 +1,4 @@
-import { Component, Entity } from "../../core";
+import { Component, Entity } from "../../../core";
 import { Oasis } from "../Oasis";
 import { SchemaResource } from "../resources";
 import { Plugin } from "./Plugin";

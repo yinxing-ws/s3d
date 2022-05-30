@@ -1,4 +1,4 @@
-import { ObjectValues, ResourceManager } from "../core";
+import { ObjectValues, ResourceManager } from "../../core";
 import { Oasis } from "./Oasis";
 import { pluginHook } from "./plugins/PluginManager";
 import {

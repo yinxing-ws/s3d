@@ -1,4 +1,4 @@
-import { Renderer } from "../../core";
+import { Renderer } from "../../../core";
 import { GLTFResource } from "../GLTFResource";
 import { registerExtension } from "../parser/Parser";
 import { ExtensionParser } from "./ExtensionParser";

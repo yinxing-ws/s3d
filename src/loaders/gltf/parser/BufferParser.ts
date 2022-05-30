@@ -1,4 +1,4 @@
-import { AssetType } from "../../core";
+import { AssetType } from "../../../core";
 import { GLTFResource } from "../GLTFResource";
 import { IBuffer, IGLTF } from "../Schema";
 import { GLTFUtil } from "../GLTFUtil";

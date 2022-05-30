@@ -1,5 +1,5 @@
-import { Skin } from "../../core";
-import { Matrix } from "../../math";
+import { Skin } from "../../../core";
+import { Matrix } from "../../../math";
 import { GLTFResource } from "../GLTFResource";
 import { GLTFUtil } from "../GLTFUtil";
 import { Parser } from "./Parser";
