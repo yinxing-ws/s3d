@@ -1,5 +1,5 @@
-import { TextureFormat } from "@/core";
-import { GLCompressedTextureInternalFormat } from "@/rhi-webgl";
+import { TextureFormat } from "src/core";
+import { GLCompressedTextureInternalFormat } from "src/rhi-webgl";
 
 export type CompressedTextureData = {
   internalFormat: GLCompressedTextureInternalFormat;

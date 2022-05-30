@@ -1,4 +1,4 @@
-import { BlinnPhongMaterial, Entity, MeshRenderer, PrimitiveMesh } from "@/core";
+import { BlinnPhongMaterial, Entity, MeshRenderer, PrimitiveMesh } from "src/core";
 
 // Only for editor
 export class Model extends MeshRenderer {

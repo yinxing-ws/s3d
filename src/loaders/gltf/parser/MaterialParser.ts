@@ -1,5 +1,5 @@
-import { Material, PBRMaterial, PBRSpecularMaterial, RenderFace, UnlitMaterial } from "@/core";
-import { Color } from "@/math";
+import { Material, PBRMaterial, PBRSpecularMaterial, RenderFace, UnlitMaterial } from "src/core";
+import { Color } from "src/math";
 import { GLTFResource } from "../GLTFResource";
 import { MaterialAlphaMode } from "../Schema";
 import { Parser } from "./Parser";

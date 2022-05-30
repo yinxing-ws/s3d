@@ -1,4 +1,4 @@
-import { IClone } from "@/design";
+import { IClone } from "src/design";
 import { CloneMode } from "./enums/CloneMode";
 
 type TypeArray =

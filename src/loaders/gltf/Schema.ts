@@ -2,7 +2,7 @@
  * Module for glTF 2.0 Interface
  */
 
-import { MeshTopology } from "@/core";
+import { MeshTopology } from "src/core";
 
 /**
  * The datatype of the components in the attribute

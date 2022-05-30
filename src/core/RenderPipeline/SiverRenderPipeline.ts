@@ -1,4 +1,4 @@
-import { Matrix, Vector2 } from '@/math';
+import { Matrix, Vector2 } from 'src/math';
 import { Background } from '..';
 import { SpriteMask } from '../2d/sprite/SpriteMask';
 import { Logger } from '../base/Logger';

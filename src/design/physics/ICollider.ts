@@ -1,5 +1,5 @@
 import { IColliderShape } from "./shape";
-import { Quaternion, Vector3 } from "@/math";
+import { Quaternion, Vector3 } from "src/math";
 
 /**
  * Interface of physics collider.

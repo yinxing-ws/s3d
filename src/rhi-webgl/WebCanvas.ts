@@ -1,5 +1,5 @@
-import { Canvas } from "@/core";
-import { Vector2 } from "@/math";
+import { Canvas } from "src/core";
+import { Vector2 } from "src/math";
 
 type OffscreenCanvas = any;
 

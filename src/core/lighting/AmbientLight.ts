@@ -1,4 +1,4 @@
-import { Color, SphericalHarmonics3 } from "@/math";
+import { Color, SphericalHarmonics3 } from "src/math";
 import { Scene } from "../Scene";
 import { Shader } from "../shader";
 import { ShaderMacro } from "../shader/ShaderMacro";
@@ -116,7 +116,7 @@ export class AmbientLight {
 
   /**
    * Specular reflection texture.
-   * @remarks This texture must be baked from @/baker
+   * @remarks This texture must be baked from src/baker
    */
   get specularTexture(): TextureCubeMap {
     return this._specularReflection;

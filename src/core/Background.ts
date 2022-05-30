@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3 } from "@/math";
+import { Color, Vector2, Vector3 } from "src/math";
 import { ModelMesh } from ".";
 import { Engine } from "./Engine";
 import { BackgroundMode } from "./enums/BackgroundMode";

@@ -1,5 +1,5 @@
-import { IClone } from "@/design";
-import { Color, Matrix, Vector2, Vector3, Vector4 } from "@/math";
+import { IClone } from "src/design";
+import { Color, Matrix, Vector2, Vector3, Vector4 } from "src/math";
 import { IRefObject } from "../asset/IRefObject";
 import { CloneManager } from "../clone/CloneManager";
 import { Texture } from "../texture/Texture";

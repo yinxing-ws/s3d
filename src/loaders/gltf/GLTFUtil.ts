@@ -1,5 +1,5 @@
-import { IndexFormat, TypedArray, VertexElement, VertexElementFormat } from "@/core";
-import { Color, Vector2, Vector3, Vector4 } from "@/math";
+import { IndexFormat, TypedArray, VertexElement, VertexElementFormat } from "src/core";
+import { Color, Vector2, Vector3, Vector4 } from "src/math";
 import { AccessorComponentType, AccessorType, IAccessor, IBufferView, IGLTF } from "./Schema";
 
 /**

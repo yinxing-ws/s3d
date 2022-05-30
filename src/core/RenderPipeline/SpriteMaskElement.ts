@@ -1,4 +1,4 @@
-import { Vector2, Vector3 } from "@/math";
+import { Vector2, Vector3 } from "src/math";
 import { Camera } from "../Camera";
 import { Component } from "../Component";
 import { Material } from "../material/Material";

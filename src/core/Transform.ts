@@ -1,4 +1,4 @@
-import { MathUtil, Matrix, Matrix3x3, Quaternion, Vector3 } from "@/math";
+import { MathUtil, Matrix, Matrix3x3, Quaternion, Vector3 } from "src/math";
 import { deepClone, ignoreClone } from "./clone/CloneManager";
 import { Component } from "./Component";
 import { UpdateFlag } from "./UpdateFlag";

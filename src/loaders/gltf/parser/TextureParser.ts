@@ -1,4 +1,4 @@
-import { AssetType, Logger, Texture2D, TextureWrapMode } from "@/core";
+import { AssetType, Logger, Texture2D, TextureWrapMode } from "src/core";
 import { GLTFResource } from "../GLTFResource";
 import { ISampler } from "../Schema";
 import { GLTFUtil } from "../GLTFUtil";

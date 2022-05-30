@@ -1,7 +1,7 @@
 import { ColliderShape } from "./ColliderShape";
 import { PhysicsManager } from "../PhysicsManager";
-import { Vector3 } from "@/math";
-import { IPlaneColliderShape } from "@/design";
+import { Vector3 } from "src/math";
+import { IPlaneColliderShape } from "src/design";
 
 /**
  * Physical collider shape plane.

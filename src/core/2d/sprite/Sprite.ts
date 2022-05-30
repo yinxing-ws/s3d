@@ -1,4 +1,4 @@
-import { BoundingBox, MathUtil, Rect, Vector2, Vector4 } from "@/math";
+import { BoundingBox, MathUtil, Rect, Vector2, Vector4 } from "src/math";
 import { RefObject } from "../../asset/RefObject";
 import { Engine } from "../../Engine";
 import { Texture2D } from "../../texture/Texture2D";

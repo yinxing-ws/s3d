@@ -1,6 +1,6 @@
 import { CompressedTextureData, CompressedCubeData } from "./type";
 import { khronosTextureContainerParser } from "./KhronosTextureContainer";
-import { TextureFormat } from "@/core";
+import { TextureFormat } from "src/core";
 
 export function parseSingleKTX(data: ArrayBuffer): CompressedTextureData {
   const ktx = khronosTextureContainerParser.parse(data, 1, true, true);

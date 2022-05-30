@@ -1,4 +1,4 @@
-import { Vector3 } from "@/math";
+import { Vector3 } from "src/math";
 
 /**
  * BlendShapeFrame.

@@ -1,4 +1,4 @@
-import { IPhysicsMaterial } from "@/design";
+import { IPhysicsMaterial } from "src/design";
 import { PhysicsManager } from "./PhysicsManager";
 import { PhysicsMaterialCombineMode } from "./enums/PhysicsMaterialCombineMode";
 

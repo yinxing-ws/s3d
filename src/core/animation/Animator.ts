@@ -1,4 +1,4 @@
-import { Quaternion, Vector3 } from "@/math";
+import { Quaternion, Vector3 } from "src/math";
 import { assignmentClone, ignoreClone } from "../clone/CloneManager";
 import { Component } from "../Component";
 import { Entity } from "../Entity";

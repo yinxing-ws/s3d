@@ -1,4 +1,4 @@
-import { Logger } from "@/core";
+import { Logger } from "src/core";
 
 export class DRACOWorker {
   // Worker instance.

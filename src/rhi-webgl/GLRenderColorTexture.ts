@@ -4,7 +4,7 @@ import {
   RenderBufferColorFormat,
   RenderColorTexture,
   TextureCubeFace
-} from "@/core";
+} from "src/core";
 import { GLTexture } from "./GLTexture";
 import { WebGLRenderer } from "./WebGLRenderer";
 

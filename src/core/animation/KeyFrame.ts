@@ -1,4 +1,4 @@
-import { Vector2, Vector3, Vector4, Quaternion } from "@/math";
+import { Vector2, Vector3, Vector4, Quaternion } from "src/math";
 
 /**
  * Keyframe.

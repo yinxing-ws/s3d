@@ -1,4 +1,4 @@
-import { Component, Logger } from "@/core";
+import { Component, Logger } from "src/core";
 import { Model } from "./Model";
 import { Oasis } from "./Oasis";
 import { Parser } from "./Parser";

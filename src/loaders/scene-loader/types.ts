@@ -1,4 +1,4 @@
-import { Engine } from "@/core";
+import { Engine } from "src/core";
 import { SchemaResource } from "./resources";
 
 export interface NodeConfig {

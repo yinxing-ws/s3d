@@ -1,4 +1,4 @@
-import { BoundingBox, Matrix, Vector3 } from "@/math";
+import { BoundingBox, Matrix, Vector3 } from "src/math";
 import { Camera } from "./Camera";
 import { deepClone, ignoreClone, shallowClone } from "./clone/CloneManager";
 import { Component } from "./Component";

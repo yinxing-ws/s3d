@@ -1,4 +1,4 @@
-import { Matrix } from "@/math";
+import { Matrix } from "src/math";
 import { EngineObject } from "../base/EngineObject";
 import { Entity } from "../Entity";
 

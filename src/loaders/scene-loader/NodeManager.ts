@@ -1,5 +1,5 @@
-import { Entity } from "@/core";
-import { Vector3 } from "@/math";
+import { Entity } from "src/core";
+import { Vector3 } from "src/math";
 import { Oasis } from "./Oasis";
 import { pluginHook } from "./plugins/PluginManager";
 import { NodeConfig } from "./types";

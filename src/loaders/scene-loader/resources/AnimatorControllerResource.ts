@@ -4,8 +4,8 @@ import {
   AnimatorControllerLayer,
   AnimatorStateMachine,
   AnimatorStateTransition
-} from "@/core";
-import { ResourceManager } from "@/core";
+} from "src/core";
+import { ResourceManager } from "src/core";
 import { SchemaResource } from "./SchemaResource";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";
 

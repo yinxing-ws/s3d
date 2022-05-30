@@ -1,4 +1,4 @@
-import { AssetPromise, AssetType, Loader, LoadItem, resourceLoader, ResourceManager } from "@/core";
+import { AssetPromise, AssetType, Loader, LoadItem, resourceLoader, ResourceManager } from "src/core";
 import { GLTFParser } from "./gltf/GLTFParser";
 import { GLTFResource } from "./gltf/GLTFResource";
 

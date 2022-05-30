@@ -1,4 +1,4 @@
-import { Ray, Vector3 } from "@/math";
+import { Ray, Vector3 } from "src/math";
 import { ICollider } from "./ICollider";
 import { IColliderShape } from "./shape";
 

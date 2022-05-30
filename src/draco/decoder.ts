@@ -1,4 +1,4 @@
-import { Logger, request } from "@/core";
+import { Logger, request } from "src/core";
 
 import { DRACOWorker, ITaskConfig } from "./DRACOWorker";
 

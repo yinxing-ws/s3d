@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3, Vector4 } from "@/math";
+import { Color, Vector2, Vector3, Vector4 } from "src/math";
 
 /**
  * temp compa

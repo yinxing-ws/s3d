@@ -1,4 +1,4 @@
-import { Matrix } from "@/math";
+import { Matrix } from "src/math";
 import { Component } from "../Component";
 import { LightFeature } from "./LightFeature";
 

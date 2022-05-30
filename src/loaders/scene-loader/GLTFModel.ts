@@ -1,4 +1,4 @@
-import { Animator, AnimatorController, AnimatorState, Component, Entity, UpdateFlag } from "@/core";
+import { Animator, AnimatorController, AnimatorState, Component, Entity, UpdateFlag } from "src/core";
 import { GLTFResource } from "../gltf/GLTFResource";
 
 /**

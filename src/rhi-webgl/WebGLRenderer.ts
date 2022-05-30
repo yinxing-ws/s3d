@@ -17,9 +17,9 @@ import {
   SubMesh,
   Texture2D,
   TextureCubeMap
-} from "@/core";
-import { IPlatformPrimitive } from "@/design";
-import { Color, Vector4 } from "@/math";
+} from "src/core";
+import { IPlatformPrimitive } from "src/design";
+import { Color, Vector4 } from "src/math";
 import { GLCapability } from "./GLCapability";
 import { GLExtensions } from "./GLExtensions";
 import { GLPrimitive } from "./GLPrimitive";

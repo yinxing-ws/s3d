@@ -1,4 +1,4 @@
-import { GLCapabilityType } from "@/core";
+import { GLCapabilityType } from "src/core";
 import { GLCompressedTextureInternalFormat } from "./type";
 import { WebGLRenderer } from "./WebGLRenderer";
 

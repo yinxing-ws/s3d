@@ -6,7 +6,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 import serve from 'rollup-plugin-serve';
 import glslify from 'rollup-plugin-glslify';
-import alias from '@rollup/plugin-alias';
 
 const { NODE_ENV } = process.env;
 
@@ -29,11 +28,6 @@ export default {
   ],
   plugins: [
     resolve({ extensions, preferBuiltins: true, mainFields }),
-    alias({
-      entries: {
-        '@': path.resolve(__dirname, 'src'),
-      },
-    }),
     glslify({
       include: [/\.glsl$/],
     }),

@@ -7,7 +7,7 @@ import {
   RenderDepthTexture,
   RenderTarget,
   TextureCubeFace,
-} from '@/core';
+} from 'src/core';
 import { GLRenderColorTexture } from './GLRenderColorTexture';
 import { GLRenderDepthTexture } from './GLRenderDepthTexture';
 import { GLTexture } from './GLTexture';

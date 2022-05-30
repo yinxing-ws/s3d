@@ -1,4 +1,4 @@
-import { Color, Matrix, Vector2, Vector3, Vector4 } from "@/math";
+import { Color, Matrix, Vector2, Vector3, Vector4 } from "src/math";
 import { Engine } from "../Engine";
 import { ColorSpace } from "../enums/ColorSpace";
 import { IHardwareRenderer } from "../renderingHardwareInterface/IHardwareRenderer";

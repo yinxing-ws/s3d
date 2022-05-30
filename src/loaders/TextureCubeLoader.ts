@@ -7,7 +7,7 @@ import {
   ResourceManager,
   TextureCubeFace,
   TextureCubeMap
-} from "@/core";
+} from "src/core";
 
 @resourceLoader(AssetType.TextureCube, [""])
 class TextureCubeLoader extends Loader<TextureCubeMap> {

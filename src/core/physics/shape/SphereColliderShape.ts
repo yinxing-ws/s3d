@@ -1,5 +1,5 @@
 import { ColliderShape } from "./ColliderShape";
-import { ISphereColliderShape } from "@/design";
+import { ISphereColliderShape } from "src/design";
 import { PhysicsManager } from "../PhysicsManager";
 
 /**

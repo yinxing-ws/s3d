@@ -1,4 +1,4 @@
-import { AssetType, GLCapabilityType, ResourceManager } from "@/core";
+import { AssetType, GLCapabilityType, ResourceManager } from "src/core";
 import { Oasis } from "../Oasis";
 import { AssetConfig } from "../types";
 import { SchemaResource } from "./SchemaResource";

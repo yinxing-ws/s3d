@@ -1,7 +1,7 @@
-import { Engine } from "@/core";
+import { Engine } from "src/core";
 import { WebCanvas } from "./WebCanvas";
 import { WebGLRenderer, WebGLRendererOptions } from "./WebGLRenderer";
-import { IPhysics } from "@/design";
+import { IPhysics } from "src/design";
 
 type OffscreenCanvas = any;
 

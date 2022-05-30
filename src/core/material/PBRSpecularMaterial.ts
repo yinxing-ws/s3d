@@ -1,4 +1,4 @@
-import { Color } from "@/math";
+import { Color } from "src/math";
 import { Engine } from "../Engine";
 import { Shader } from "../shader/Shader";
 import { Texture2D } from "../texture/Texture2D";

@@ -1,4 +1,4 @@
-import { Color, Vector2, Vector3 } from "@/math";
+import { Color, Vector2, Vector3 } from "src/math";
 import { Camera } from "../Camera";
 import { Material } from "../material/Material";
 import { Renderer } from "../Renderer";

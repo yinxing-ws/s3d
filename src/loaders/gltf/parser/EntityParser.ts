@@ -1,4 +1,4 @@
-import { Entity } from "@/core";
+import { Entity } from "src/core";
 import { GLTFResource } from "../GLTFResource";
 import { Parser } from "./Parser";
 

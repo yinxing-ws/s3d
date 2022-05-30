@@ -1,4 +1,4 @@
-import { IPlatformTextureCubeMap, Logger, TextureCubeFace, TextureCubeMap, TextureFormat } from "@/core";
+import { IPlatformTextureCubeMap, Logger, TextureCubeFace, TextureCubeMap, TextureFormat } from "src/core";
 import { GLTexture } from "./GLTexture";
 import { WebGLRenderer } from "./WebGLRenderer";
 

@@ -7,7 +7,7 @@ import {
   ResourceManager,
   TextureCubeFace,
   TextureCubeMap
-} from "@/core";
+} from "src/core";
 import { parseCubeKTX } from "./compressed-texture";
 
 @resourceLoader(AssetType.KTXCube, [])

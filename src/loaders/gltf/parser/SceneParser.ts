@@ -9,7 +9,7 @@ import {
   Entity,
   MeshRenderer,
   SkinnedMeshRenderer
-} from "@/core";
+} from "src/core";
 import { IKHRLightsPunctual, IKHRLightsPunctual_LightNode } from "../extensions/Schema";
 import { GLTFResource } from "../GLTFResource";
 import { CameraType, ICamera, INode } from "../Schema";

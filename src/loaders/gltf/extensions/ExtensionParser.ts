@@ -1,4 +1,4 @@
-import { EngineObject } from "@/core";
+import { EngineObject } from "src/core";
 import { GLTFResource } from "../GLTFResource";
 import { ExtensionSchema } from "./Schema";
 

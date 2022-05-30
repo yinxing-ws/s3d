@@ -1,5 +1,5 @@
-import { BlendShape, Engine, EngineObject, ModelMesh, TypedArray } from "@/core";
-import { Vector3 } from "@/math";
+import { BlendShape, Engine, EngineObject, ModelMesh, TypedArray } from "src/core";
+import { Vector3 } from "src/math";
 import { GLTFResource } from "../GLTFResource";
 import { GLTFUtil } from "../GLTFUtil";
 import { AccessorType, IGLTF, IMesh, IMeshPrimitive } from "../Schema";

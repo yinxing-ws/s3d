@@ -1,4 +1,4 @@
-import { Matrix } from "@/math";
+import { Matrix } from "src/math";
 import { Logger } from "../base/Logger";
 import { ignoreClone } from "../clone/CloneManager";
 import { Entity } from "../Entity";

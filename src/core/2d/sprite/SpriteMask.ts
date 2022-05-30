@@ -1,4 +1,4 @@
-import { Vector3 } from "@/math";
+import { Vector3 } from "src/math";
 import { Camera } from "../../Camera";
 import { assignmentClone, deepClone, ignoreClone } from "../../clone/CloneManager";
 import { ICustomClone } from "../../clone/ComponentCloner";

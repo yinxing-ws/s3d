@@ -11,10 +11,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "baseUrl": "./",
-    "skipLibCheck": true,
-    "paths": {
-      "@/*": ["src/*"] // 配置模块别名
-    }
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "types"]
 }

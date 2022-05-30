@@ -1,4 +1,4 @@
-import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "@/core";
+import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "src/core";
 
 function isBase64(url) {
   return /^data:(.+?);base64,/.test(url);

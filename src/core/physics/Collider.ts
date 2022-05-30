@@ -1,6 +1,6 @@
 import { Component } from "../Component";
 import { ignoreClone } from "../clone/CloneManager";
-import { ICollider } from "@/design";
+import { ICollider } from "src/design";
 import { ColliderShape } from "./shape/ColliderShape";
 import { UpdateFlag } from "../UpdateFlag";
 import { Entity } from "../Entity";

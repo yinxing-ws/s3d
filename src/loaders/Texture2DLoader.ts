@@ -6,7 +6,7 @@ import {
   resourceLoader,
   ResourceManager,
   Texture2D
-} from "@/core";
+} from "src/core";
 
 @resourceLoader(AssetType.Texture2D, ["png", "jpg", "webp", "jpeg"])
 class Texture2DLoader extends Loader<Texture2D> {

@@ -1,4 +1,4 @@
-import { Engine, EventDispatcher, ObjectValues } from "@/core";
+import { Engine, EventDispatcher, ObjectValues } from "src/core";
 import { AbilityManager } from "./AbilityManager";
 import { NodeManager } from "./NodeManager";
 import { SceneManager } from "./SceneManager";
