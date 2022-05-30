@@ -1,4 +1,4 @@
-import { Vector4 } from "src/math";
+import { Vector4 } from "../../math";
 import { Engine } from "../Engine";
 import { Material } from "../material/Material";
 import { CompareFunction } from "../shader/enums/CompareFunction";

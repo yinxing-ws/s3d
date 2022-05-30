@@ -1,4 +1,4 @@
-import { Quaternion, Vector2, Vector3, Vector4 } from "src/math";
+import { Quaternion, Vector2, Vector3, Vector4 } from "../../math";
 import { InterpolableValueType } from "./enums/InterpolableValueType";
 import { InterpolationType } from "./enums/InterpolationType";
 import {

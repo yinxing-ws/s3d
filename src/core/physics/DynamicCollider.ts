@@ -1,8 +1,8 @@
-import { IDynamicCollider } from "src/design";
+import { IDynamicCollider } from "../../design";
 import { Entity } from "../Entity";
 import { Collider } from "./Collider";
 import { PhysicsManager } from "./PhysicsManager";
-import { Vector3 } from "src/math";
+import { Vector3 } from "../../math";
 
 /**
  * A dynamic collider can act with self-defined movement or physical force.

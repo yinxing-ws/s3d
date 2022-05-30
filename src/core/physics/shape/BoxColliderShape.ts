@@ -1,6 +1,6 @@
 import { ColliderShape } from "./ColliderShape";
-import { IBoxColliderShape } from "src/design";
-import { Vector3 } from "src/math";
+import { IBoxColliderShape } from "../../../design";
+import { Vector3 } from "../../../math";
 import { PhysicsManager } from "../PhysicsManager";
 
 /**

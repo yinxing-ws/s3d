@@ -1,4 +1,4 @@
-import { DirectLight, Entity, PointLight, SpotLight } from "src/core";
+import { DirectLight, Entity, PointLight, SpotLight } from "../../../core";
 import { GLTFResource } from "../GLTFResource";
 import { registerExtension } from "../parser/Parser";
 import { ExtensionParser } from "./ExtensionParser";

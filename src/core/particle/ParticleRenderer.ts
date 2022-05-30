@@ -1,4 +1,4 @@
-import { MathUtil, Vector3, Color } from "src/math";
+import { MathUtil, Vector3, Color } from "../../math";
 import { Buffer } from "../graphic/Buffer";
 import { BufferBindFlag } from "../graphic/enums/BufferBindFlag";
 import { BufferUsage } from "../graphic/enums/BufferUsage";

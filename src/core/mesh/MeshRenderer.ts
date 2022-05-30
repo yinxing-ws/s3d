@@ -1,4 +1,4 @@
-import { BoundingBox } from "src/math";
+import { BoundingBox } from "../../math";
 import { Logger } from "../base/Logger";
 import { Camera } from "../Camera";
 import { ignoreClone } from "../clone/CloneManager";

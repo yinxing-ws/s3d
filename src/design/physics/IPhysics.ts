@@ -3,7 +3,7 @@ import { IPhysicsManager } from "./IPhysicsManager";
 import { IBoxColliderShape, ISphereColliderShape, ICapsuleColliderShape, IPlaneColliderShape } from "./shape";
 import { IDynamicCollider } from "./IDynamicCollider";
 import { IStaticCollider } from "./IStaticCollider";
-import { Quaternion, Vector3 } from "src/math";
+import { Quaternion, Vector3 } from "../../math";
 
 /**
  * The interface of physics creation.

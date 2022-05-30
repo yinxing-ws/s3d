@@ -1,4 +1,4 @@
-import { Color } from "src/math";
+import { Color } from "../../math";
 import { Component } from "../Component";
 import { Entity } from "../Entity";
 import { Shader } from "../shader/Shader";

@@ -1,5 +1,5 @@
-import { IPlatformPrimitive } from "src/design/renderingHardwareInterface/IPlatformPrimitive";
-import { BoundingBox } from "src/math";
+import { IPlatformPrimitive } from "../../design/renderingHardwareInterface/IPlatformPrimitive";
+import { BoundingBox } from "../../math";
 import { RefObject } from "../asset/RefObject";
 import { Engine } from "../Engine";
 import { BufferUtil } from "../graphic/BufferUtil";

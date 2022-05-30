@@ -1,4 +1,4 @@
-import { Vector2, Vector3 } from "src/math";
+import { Vector2, Vector3 } from "../../math";
 import { GLCapabilityType } from "../base/Constant";
 import { Engine } from "../Engine";
 import { ModelMesh } from "./ModelMesh";

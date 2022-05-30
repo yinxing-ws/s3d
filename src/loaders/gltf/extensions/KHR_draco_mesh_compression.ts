@@ -1,4 +1,4 @@
-import { DRACODecoder } from "src/draco";
+import { DRACODecoder } from "../../../draco";
 import { GLTFResource } from "../GLTFResource";
 import { GLTFUtil } from "../GLTFUtil";
 import { registerExtension } from "../parser/Parser";

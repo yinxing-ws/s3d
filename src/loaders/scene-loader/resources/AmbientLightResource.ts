@@ -1,4 +1,4 @@
-import { AssetType, ResourceManager } from "src/core";
+import { AssetType, ResourceManager } from "../../core";
 import { Oasis } from "../Oasis";
 import { AssetConfig } from "../types";
 import { SchemaResource } from "./SchemaResource";

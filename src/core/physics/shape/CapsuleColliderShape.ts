@@ -1,5 +1,5 @@
 import { ColliderShape } from "./ColliderShape";
-import { ICapsuleColliderShape } from "src/design";
+import { ICapsuleColliderShape } from "../../../design";
 import { PhysicsManager } from "../PhysicsManager";
 import { ColliderShapeUpAxis } from "../enums/ColliderShapeUpAxis";
 

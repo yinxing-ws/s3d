@@ -1,5 +1,5 @@
-import { PBRSpecularMaterial } from "src/core";
-import { Color } from "src/math";
+import { PBRSpecularMaterial } from "../../core";
+import { Color } from "../../math";
 import { GLTFResource } from "../GLTFResource";
 import { MaterialParser } from "../parser/MaterialParser";
 import { registerExtension } from "../parser/Parser";

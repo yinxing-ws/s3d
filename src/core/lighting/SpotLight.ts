@@ -1,4 +1,4 @@
-import { Color, Vector3 } from "src/math";
+import { Color, Vector3 } from "../../math";
 import { Shader } from "../shader";
 import { ShaderData } from "../shader/ShaderData";
 import { ShaderProperty } from "../shader/ShaderProperty";

@@ -1,4 +1,4 @@
-import { Color } from 'src/math';
+import { Color } from '../../math';
 import { Camera } from '../Camera';
 import { CameraClearFlags } from '../enums/CameraClearFlags';
 import { Layer } from '../Layer';

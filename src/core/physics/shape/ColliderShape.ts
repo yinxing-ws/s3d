@@ -1,6 +1,6 @@
-import { IColliderShape } from "src/design";
+import { IColliderShape } from "../../../design";
 import { PhysicsMaterial } from "../PhysicsMaterial";
-import { Vector3 } from "src/math";
+import { Vector3 } from "../../../math";
 import { Collider } from "../Collider";
 
 /**

@@ -1,5 +1,5 @@
 import { BlendShapeFrame } from "./BlendShapeFrame";
-import { Vector3 } from "src/math";
+import { Vector3 } from "../../math";
 import { UpdateFlag } from "../UpdateFlag";
 import { UpdateFlagManager } from "../UpdateFlagManager";
 

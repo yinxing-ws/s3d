@@ -1,6 +1,6 @@
 import { HitResult } from "./HitResult";
-import { Ray } from "src/math";
-import { IPhysics, IPhysicsManager } from "src/design";
+import { Ray } from "../../math";
+import { IPhysics, IPhysicsManager } from "../../design";
 import { Collider } from "./Collider";
 import { Layer } from "../Layer";
 import { ColliderShape } from "./shape/ColliderShape";

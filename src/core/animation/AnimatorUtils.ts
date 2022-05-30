@@ -1,4 +1,4 @@
-import { Vector3, Quaternion } from "src/math";
+import { Vector3, Quaternion } from "../../math";
 
 /**
  * @internal

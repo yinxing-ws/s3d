@@ -1,4 +1,4 @@
-import { Color } from "src/math";
+import { Color } from "../../../math";
 import { GLCapabilityType } from "../../base/Constant";
 import { IHardwareRenderer } from "../../renderingHardwareInterface/IHardwareRenderer";
 import { BlendFactor } from "../enums/BlendFactor";

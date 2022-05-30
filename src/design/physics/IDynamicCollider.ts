@@ -1,4 +1,4 @@
-import { Vector3 } from "src/math";
+import { Vector3 } from "../../math";
 import { ICollider } from "./ICollider";
 
 /**

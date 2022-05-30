@@ -1,4 +1,4 @@
-import { Ray, Vector2 } from "src/math";
+import { Ray, Vector2 } from "../../../math";
 import { Canvas } from "../../Canvas";
 import { Engine } from "../../Engine";
 import { Entity } from "../../Entity";

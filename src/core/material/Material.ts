@@ -1,4 +1,4 @@
-import { IClone } from "src/design";
+import { IClone } from "../../design";
 import { RefObject } from "../asset/RefObject";
 import { CloneManager } from "../clone/CloneManager";
 import { Engine } from "../Engine";

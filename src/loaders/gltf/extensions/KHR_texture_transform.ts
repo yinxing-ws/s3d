@@ -1,4 +1,4 @@
-import { Logger, PBRBaseMaterial, UnlitMaterial } from "src/core";
+import { Logger, PBRBaseMaterial, UnlitMaterial } from "../../core";
 import { GLTFResource } from "../GLTFResource";
 import { registerExtension } from "../parser/Parser";
 import { ExtensionParser } from "./ExtensionParser";

@@ -1,4 +1,4 @@
-import { Logger, ResourceManager } from "src/core";
+import { Logger, ResourceManager } from "../../core";
 import { Oasis } from "../Oasis";
 import { SchemaResourceManager } from "../ResourceManager";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";

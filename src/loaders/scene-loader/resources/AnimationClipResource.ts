@@ -1,6 +1,6 @@
 import {
   ResourceManager,
-} from "src/core";
+} from "../../core";
 import { AssetConfig, LoadAttachedResourceResult } from "../types";
 import { SchemaResource } from "./SchemaResource";
 

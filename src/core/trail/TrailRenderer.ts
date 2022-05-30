@@ -1,4 +1,4 @@
-import { Matrix, Quaternion, Vector3 } from "src/math";
+import { Matrix, Quaternion, Vector3 } from "../../math";
 import { Camera } from "../Camera";
 import { Entity } from "../Entity";
 import { Buffer } from "../graphic/Buffer";
