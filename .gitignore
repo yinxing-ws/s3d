@@ -11,3 +11,5 @@ tsconfig.tsbuildinfo
 tmp
 lib
 dist
+
+types

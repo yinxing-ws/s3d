@@ -6,12 +6,12 @@ import {
   RenderColorTexture,
   RenderDepthTexture,
   RenderTarget,
-  TextureCubeFace
-} from "@/core";
-import { GLRenderColorTexture } from "./GLRenderColorTexture";
-import { GLRenderDepthTexture } from "./GLRenderDepthTexture";
-import { GLTexture } from "./GLTexture";
-import { WebGLRenderer } from "./WebGLRenderer";
+  TextureCubeFace,
+} from '@/core';
+import { GLRenderColorTexture } from './GLRenderColorTexture';
+import { GLRenderDepthTexture } from './GLRenderDepthTexture';
+import { GLTexture } from './GLTexture';
+import { WebGLRenderer } from './WebGLRenderer';
 
 /**
  * The render target in WebGL platform is used for off-screen rendering.
@@ -50,7 +50,7 @@ export class GLRenderTarget implements IPlatformRenderTarget {
     }
 
     if (_colorTextures.length > 1 && !rhi.canIUse(GLCapabilityType.drawBuffers)) {
-      throw new Error("MRT is not supported");
+      throw new Error('MRT is not supported');
     }
 
     if (_colorTextures.some((v: RenderColorTexture) => v.width !== width || v.height !== height)) {
@@ -63,7 +63,7 @@ export class GLRenderTarget implements IPlatformRenderTarget {
 
     // todo: necessary to support MRT + Cube + [,MSAA] ?
     if (_colorTextures.length > 1 && _colorTextures.some((v: RenderColorTexture) => v.isCube)) {
-      throw new Error("MRT+Cube+[,MSAA] is not supported");
+      throw new Error('MRT+Cube+[,MSAA] is not supported');
     }
 
     const maxAntiAliasing = rhi.capability.maxAntiAliasing;
@@ -119,8 +119,10 @@ export class GLRenderTarget implements IPlatformRenderTarget {
         const { _platformTexture: platformTexture } = depthTexture;
         gl.framebufferTexture2D(
           gl.FRAMEBUFFER,
+          /** @ts-ignore */
           platformTexture._formatDetail.attachment,
           isCube ? gl.TEXTURE_CUBE_MAP_POSITIVE_X + faceIndex : gl.TEXTURE_2D,
+          /** @ts-ignore */
           platformTexture._glTexture,
           mipLevel
         );
@@ -329,21 +331,21 @@ export class GLRenderTarget implements IPlatformRenderTarget {
     switch (e) {
       case gl.FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
         throw new Error(
-          "The attachment types are mismatched or not all framebuffer attachment points are framebuffer attachment complete"
+          'The attachment types are mismatched or not all framebuffer attachment points are framebuffer attachment complete'
         );
       case gl.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-        throw new Error("There is no attachment");
+        throw new Error('There is no attachment');
       case gl.FRAMEBUFFER_INCOMPLETE_DIMENSIONS:
-        throw new Error(" Height and width of the attachment are not the same.");
+        throw new Error(' Height and width of the attachment are not the same.');
       case gl.FRAMEBUFFER_UNSUPPORTED:
         throw new Error(
-          "The format of the attachment is not supported or if depth and stencil attachments are not the same renderbuffer"
+          'The format of the attachment is not supported or if depth and stencil attachments are not the same renderbuffer'
         );
     }
 
     if (isWebGL2 && e === gl.FRAMEBUFFER_INCOMPLETE_MULTISAMPLE) {
       throw new Error(
-        "The values of gl.RENDERBUFFER_SAMPLES are different among attached renderbuffers, or are non-zero if the attached images are a mix of renderbuffers and textures."
+        'The values of gl.RENDERBUFFER_SAMPLES are different among attached renderbuffers, or are non-zero if the attached images are a mix of renderbuffers and textures.'
       );
     }
   }

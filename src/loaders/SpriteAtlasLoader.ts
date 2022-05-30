@@ -9,7 +9,7 @@ import {
   Sprite,
   SpriteAtlas
 } from "@/core";
-import { AtlasConfig } from "@/core/types/2d/atlas/types";
+import { AtlasConfig } from "@/core/2d/atlas/types";
 import { Rect, Vector2 } from "@/math";
 import { GLTFUtil } from "./gltf/GLTFUtil";
 
