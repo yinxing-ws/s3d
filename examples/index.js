@@ -14,7 +14,17 @@ import {
   OrbitControl,
   WebGLEngine,
   PostEffectPass,
+  BufferMesh,
+  BufferBindFlag,
+  Buffer,
+  BufferUsage,
+  BlinnPhongMaterial,
+  IndexFormat,
+  VertexElement,
+  VertexElementFormat,
+  RenderFace,
 } from '../dist/module.js';
+import { vb, ib } from './test.js';
 
 const gltfData = {
   standard: {
@@ -79,90 +89,107 @@ const createDirectLight = (rx, ry, rz, intensity, color) => {
 
 createDirectLight(-30, 20, 0, 0.6);
 
-engine.resourceManager
-  .load({
-    type: AssetType.Env,
-    url: 'https://gw.alipayobjects.com/os/OasisHub/440001352/2393/belfast_open_field_2k.hdr',
-  })
-  .then((ambientLight) => {
-    scene.ambientLight = ambientLight;
-  });
+const cube = rootEntity.createChild('test');
+const cubeRenderer = cube.addComponent(MeshRenderer);
+const material = new BlinnPhongMaterial(engine);
+material.renderFace = RenderFace.Double;
+cubeRenderer.setMaterial(material);
+const geometry = new BufferMesh(engine, 'CustomCubeGeometry');
+const indexBuffer = new Buffer(engine, BufferBindFlag.IndexBuffer, ib, BufferUsage.Static);
+const vertexBuffer = new Buffer(engine, BufferBindFlag.VertexBuffer, vb, BufferUsage.Static);
+geometry.setVertexBufferBinding(vertexBuffer);
+geometry.setIndexBufferBinding(indexBuffer, IndexFormat.UInt8);
 
-// modal
-let data = gltfData.standard;
+geometry.setVertexElements([new VertexElement('POSITION', 0, VertexElementFormat.Vector3, 0)]);
 
-const { path, rotation, scale } = data;
-const [rx, ry, rz] = rotation;
-const [sx, sy, sz] = scale;
+cubeRenderer.mesh = geometry;
 
-const load = (url) => engine.resourceManager.load({ type: AssetType.Texture2D, url });
+geometry.addSubMesh(0, ib.length);
 
-engine.resourceManager
-  .load({
-    type: AssetType.GLTFResource,
-    url: 'https://gw.alipayobjects.com/os/bmw-prod/150e44f6-7810-4c45-8029-3575d36aff30.gltf',
-  })
-  .then((gltf) => {
-    // 添加gltf模型
-    const root = gltf.defaultSceneRoot;
-    // // rotation和scale
-    // root.transform.setRotation(rx, ry, rz);
-    // root.transform.setScale(sx, sy, sz);
+// engine.resourceManager
+//   .load({
+//     type: AssetType.Env,
+//     url: 'https://gw.alipayobjects.com/os/OasisHub/440001352/2393/belfast_open_field_2k.hdr',
+//   })
+//   .then((ambientLight) => {
+//     scene.ambientLight = ambientLight;
+//   });
 
-    // const e1 = root.children[0].children[0];
-    // const e2 = root.children[0].children[1];
+// // modal
+// let data = gltfData.standard;
 
-    // let ret1 = [];
-    // ret1 = e1.getComponents(MeshRenderer, ret1);
-    // let ret2 = e2.getComponent(MeshRenderer);
+// const { path, rotation, scale } = data;
+// const [rx, ry, rz] = rotation;
+// const [sx, sy, sz] = scale;
 
-    // const m1 = ret1[0].getMaterial();
-    // const m2 = ret2.getMaterial();
-    // const m3 = ret1[1].getMaterial();
+// const load = (url) => engine.resourceManager.load({ type: AssetType.Texture2D, url });
 
-    // m1.baseColor = new Color(1, 1, 1, 1);
-    // m2.baseColor = new Color(1, 1, 1, 1);
-    // m3.baseColor = new Color(1, 1, 1, 1);
+// engine.resourceManager
+//   .load({
+//     type: AssetType.GLTFResource,
+//     url: 'https://gw.alipayobjects.com/os/bmw-prod/150e44f6-7810-4c45-8029-3575d36aff30.gltf',
+//   })
+//   .then((gltf) => {
+//     // 添加gltf模型
+//     const root = gltf.defaultSceneRoot;
+//     // // rotation和scale
+//     // root.transform.setRotation(rx, ry, rz);
+//     // root.transform.setScale(sx, sy, sz);
 
-    // load(textures.m1.color).then((texture) => {
-    //   m1.baseTexture = texture;
-    //   m3.baseTexture = texture;
-    // });
+//     // const e1 = root.children[0].children[0];
+//     // const e2 = root.children[0].children[1];
 
-    // load(textures.m1.normal).then((texture) => {
-    //   m1.normalTexture = texture;
-    //   m3.normalTexture = texture;
-    // });
+//     // let ret1 = [];
+//     // ret1 = e1.getComponents(MeshRenderer, ret1);
+//     // let ret2 = e2.getComponent(MeshRenderer);
 
-    // load(textures.m1.orm).then((texture) => {
-    //   m1.roughnessMetallicTexture = texture;
-    //   m1.occlusionTexture = texture;
-    //   m1.metallic = 1;
-    //   m1.roughness = 1;
+//     // const m1 = ret1[0].getMaterial();
+//     // const m2 = ret2.getMaterial();
+//     // const m3 = ret1[1].getMaterial();
 
-    //   m3.roughnessMetallicTexture = texture;
-    //   m3.occlusionTexture = texture;
-    //   m3.metallic = 1;
-    //   m3.roughness = 1;
-    // });
+//     // m1.baseColor = new Color(1, 1, 1, 1);
+//     // m2.baseColor = new Color(1, 1, 1, 1);
+//     // m3.baseColor = new Color(1, 1, 1, 1);
 
-    // load(textures.m2.color).then((texture) => {
-    //   m2.baseTexture = texture;
-    // });
+//     // load(textures.m1.color).then((texture) => {
+//     //   m1.baseTexture = texture;
+//     //   m3.baseTexture = texture;
+//     // });
 
-    // load(textures.m2.normal).then((texture) => {
-    //   m2.normalTexture = texture;
-    // });
+//     // load(textures.m1.normal).then((texture) => {
+//     //   m1.normalTexture = texture;
+//     //   m3.normalTexture = texture;
+//     // });
 
-    // load(textures.m2.orm).then((texture) => {
-    //   m2.roughnessMetallicTexture = texture;
-    //   m2.occlusionTexture = texture;
-    //   m2.metallic = 1;
-    //   m2.roughness = 1;
-    // });
+//     // load(textures.m1.orm).then((texture) => {
+//     //   m1.roughnessMetallicTexture = texture;
+//     //   m1.occlusionTexture = texture;
+//     //   m1.metallic = 1;
+//     //   m1.roughness = 1;
 
-    rootEntity.addChild(root);
-  });
+//     //   m3.roughnessMetallicTexture = texture;
+//     //   m3.occlusionTexture = texture;
+//     //   m3.metallic = 1;
+//     //   m3.roughness = 1;
+//     // });
+
+//     // load(textures.m2.color).then((texture) => {
+//     //   m2.baseTexture = texture;
+//     // });
+
+//     // load(textures.m2.normal).then((texture) => {
+//     //   m2.normalTexture = texture;
+//     // });
+
+//     // load(textures.m2.orm).then((texture) => {
+//     //   m2.roughnessMetallicTexture = texture;
+//     //   m2.occlusionTexture = texture;
+//     //   m2.metallic = 1;
+//     //   m2.roughness = 1;
+//     // });
+
+//     rootEntity.addChild(root);
+//   });
 
 // Run engine.
 engine.run();
