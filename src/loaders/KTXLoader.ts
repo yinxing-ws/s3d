@@ -6,7 +6,7 @@ import {
   resourceLoader,
   ResourceManager,
   Texture2D
-} from "src/core";
+} from "../core";
 import { parseSingleKTX } from "./compressed-texture";
 
 @resourceLoader(AssetType.KTX, ["ktx"])

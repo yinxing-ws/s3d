@@ -1,5 +1,5 @@
 import { IColliderShape } from "./IColliderShape";
-import { Vector3 } from "src/math";
+import { Vector3 } from "../math";
 
 /**
  * Interface of physics plane collider shape.

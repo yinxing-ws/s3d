@@ -1,5 +1,5 @@
-import { Entity, Script } from 'src/core';
-import { MathUtil, Vector3 } from 'src/math';
+import { Entity, Script } from '../core';
+import { MathUtil, Vector3 } from '../math';
 import { Spherical } from './Spherical';
 
 // Prevent universal lock.

@@ -9,7 +9,7 @@ import {
   TextureFilterMode,
   TextureFormat,
   TextureWrapMode
-} from "src/core";
+} from "../core";
 import { GLCompressedTextureInternalFormat, TextureFormatDetail } from "./type";
 import { WebGLRenderer } from "./WebGLRenderer";
 

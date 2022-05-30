@@ -1,4 +1,4 @@
-import { Quaternion, Vector3 } from "src/math";
+import { Quaternion, Vector3 } from "../math";
 import { Component } from "../Component";
 import { Entity } from "../Entity";
 import { Transform } from "../Transform";

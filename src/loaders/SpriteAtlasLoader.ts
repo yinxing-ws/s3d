@@ -8,9 +8,9 @@ import {
   Texture2D,
   Sprite,
   SpriteAtlas
-} from "src/core";
-import { AtlasConfig } from "src/core/2d/atlas/types";
-import { Rect, Vector2 } from "src/math";
+} from "../core";
+import { AtlasConfig } from "../core/2d/atlas/types";
+import { Rect, Vector2 } from "../math";
 import { GLTFUtil } from "./gltf/GLTFUtil";
 
 @resourceLoader(AssetType.SpriteAtlas, ["atlas"], false)

@@ -1,4 +1,4 @@
-import { IPlatformTexture2D, Logger, Texture2D, TextureFormat } from "src/core";
+import { IPlatformTexture2D, Logger, Texture2D, TextureFormat } from "../core";
 import { GLTexture } from "./GLTexture";
 import { WebGLRenderer } from "./WebGLRenderer";
 

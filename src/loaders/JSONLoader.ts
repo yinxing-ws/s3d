@@ -1,4 +1,4 @@
-import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "src/core";
+import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "../core";
 
 @resourceLoader(AssetType.JSON, ["json"], false)
 class JSONLoader extends Loader<string> {

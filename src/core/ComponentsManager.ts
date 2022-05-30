@@ -5,7 +5,7 @@ import { Renderer } from "./Renderer";
 import { Script } from "./Script";
 import { ShaderMacroCollection } from "./shader/ShaderMacroCollection";
 import { RenderContext } from "./RenderPipeline/RenderContext";
-import { Vector3 } from "src/math";
+import { Vector3 } from "../math";
 import { Collider } from "./physics/Collider";
 
 /**

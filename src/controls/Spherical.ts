@@ -1,4 +1,4 @@
-import { Vector3, MathUtil } from "src/math";
+import { Vector3, MathUtil } from "../math";
 
 // Prevent gimbal lock.
 const ESP = MathUtil.zeroTolerance;

@@ -1,5 +1,5 @@
-import { GLCapabilityType, Logger, Mesh, SubMesh } from "src/core";
-import { IPlatformPrimitive } from "src/design";
+import { GLCapabilityType, Logger, Mesh, SubMesh } from "../core";
+import { IPlatformPrimitive } from "../design";
 import { WebGLExtension } from "./type";
 import { WebGLRenderer } from "./WebGLRenderer";
 

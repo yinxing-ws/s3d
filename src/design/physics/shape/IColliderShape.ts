@@ -1,4 +1,4 @@
-import { Quaternion, Vector3 } from "src/math";
+import { Quaternion, Vector3 } from "../../../math";
 import { IPhysicsMaterial } from "../IPhysicsMaterial";
 
 /**

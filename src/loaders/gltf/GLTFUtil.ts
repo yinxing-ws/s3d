@@ -1,6 +1,6 @@
-import { IndexFormat, TypedArray, VertexElement, VertexElementFormat } from "src/core";
-import { Color, Vector2, Vector3, Vector4 } from "src/math";
-import { AccessorComponentType, AccessorType, IAccessor, IBufferView, IGLTF } from "./Schema";
+import { IndexFormat, TypedArray, VertexElement, VertexElementFormat } from '../../core';
+import { Color, Vector2, Vector3, Vector4 } from '../../math';
+import { AccessorComponentType, AccessorType, IAccessor, IBufferView, IGLTF } from './Schema';
 
 /**
  * @internal
@@ -54,12 +54,12 @@ export class GLTFUtil {
    * Parse binary text for glb loader.
    */
   static decodeText(array: Uint8Array): string {
-    if (typeof TextDecoder !== "undefined") {
+    if (typeof TextDecoder !== 'undefined') {
       return new TextDecoder().decode(array);
     }
 
     // TextDecoder polyfill
-    let s = "";
+    let s = '';
 
     for (let i = 0, il = array.length; i < il; i++) {
       s += String.fromCharCode(array[i]);
@@ -117,8 +117,8 @@ export class GLTFUtil {
     const bufferViews = gltf.bufferViews;
     const bufferView = bufferViews[accessor.bufferView];
     const arrayBuffer = buffers[bufferView.buffer];
-    const accessorByteOffset = accessor.hasOwnProperty("byteOffset") ? accessor.byteOffset : 0;
-    const bufferViewByteOffset = bufferView.hasOwnProperty("byteOffset") ? bufferView.byteOffset : 0;
+    const accessorByteOffset = accessor.hasOwnProperty('byteOffset') ? accessor.byteOffset : 0;
+    const bufferViewByteOffset = bufferView.hasOwnProperty('byteOffset') ? bufferView.byteOffset : 0;
     const byteOffset = accessorByteOffset + bufferViewByteOffset;
     const accessorTypeSize = GLTFUtil.getAccessorTypeSize(accessor.type);
     const length = accessorTypeSize * accessor.count;
@@ -275,9 +275,9 @@ export class GLTFUtil {
       const img = new Image();
       img.src = URL.createObjectURL(blob);
 
-      img.crossOrigin = "anonymous";
+      img.crossOrigin = 'anonymous';
       img.onerror = function () {
-        reject(new Error("Failed to load image buffer"));
+        reject(new Error('Failed to load image buffer'));
       };
       img.onload = function () {
         // Call requestAnimationFrame to avoid iOS's bug.
@@ -301,11 +301,11 @@ export class GLTFUtil {
     }
 
     const char0 = relativeUrl.charAt(0);
-    if (char0 === ".") {
+    if (char0 === '.') {
       return GLTFUtil._formatRelativePath(relativeUrl + relativeUrl);
     }
 
-    return baseUrl.substring(0, baseUrl.lastIndexOf("/") + 1) + relativeUrl;
+    return baseUrl.substring(0, baseUrl.lastIndexOf('/') + 1) + relativeUrl;
   }
 
   /**
@@ -326,11 +326,11 @@ export class GLTFUtil {
     const header = {
       magic: dataView.getUint32(0, true),
       version: dataView.getUint32(UINT32_LENGTH, true),
-      length: dataView.getUint32(2 * UINT32_LENGTH, true)
+      length: dataView.getUint32(2 * UINT32_LENGTH, true),
     };
 
     if (header.magic !== GLB_HEADER_MAGIC) {
-      console.error("Invalid glb magic number. Expected 0x46546C67, found 0x" + header.magic.toString(16));
+      console.error('Invalid glb magic number. Expected 0x46546C67, found 0x' + header.magic.toString(16));
       return null;
     }
 
@@ -340,7 +340,7 @@ export class GLTFUtil {
 
     // read glTF json
     if (chunkType !== GLB_CHUNK_TYPES.JSON) {
-      console.error("Invalid glb chunk type. Expected 0x4E4F534A, found 0x" + chunkType.toString(16));
+      console.error('Invalid glb chunk type. Expected 0x4E4F534A, found 0x' + chunkType.toString(16));
       return null;
     }
 
@@ -356,7 +356,7 @@ export class GLTFUtil {
       chunkType = dataView.getUint32(byteOffset + UINT32_LENGTH, true);
 
       if (chunkType !== GLB_CHUNK_TYPES.BIN) {
-        console.error("Invalid glb chunk type. Expected 0x004E4942, found 0x" + chunkType.toString(16));
+        console.error('Invalid glb chunk type. Expected 0x004E4942, found 0x' + chunkType.toString(16));
         return null;
       }
 
@@ -369,18 +369,18 @@ export class GLTFUtil {
 
     return {
       gltf,
-      buffers
+      buffers,
     };
   }
 
   private static _formatRelativePath(value: string): string {
-    const parts = value.split("/");
+    const parts = value.split('/');
     for (let i = 0, n = parts.length; i < n; i++) {
-      if (parts[i] == "..") {
+      if (parts[i] == '..') {
         parts.splice(i - 1, 2);
         i -= 2;
       }
     }
-    return parts.join("/");
+    return parts.join('/');
   }
 }

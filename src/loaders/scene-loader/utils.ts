@@ -25,7 +25,7 @@ export function union(arr1: Array<any>, arr2: Array<any>): Array<any> {
   return arr1.concat(arr2.filter((v) => !(arr1.indexOf(v) > -1)));
 }
 
-// https://github.com/BabylonJS/Babylon.js/blob/d780145531ac1b1cee85cbfba4d836dcc24ab58e/src/Engines/Extensions/engine.textureSelector.ts#L70
+// https://github.com/BabylonJS/Babylon.js/blob/d780145531ac1b1cee85cbfba4d836dcc24ab58e/../Engines/Extensions/engine.textureSelector.ts#L70
 // Intelligently add supported compressed formats in order to check for.
 // Check for ASTC support first as it is most powerful and to be very cross platform.
 // Next PVRTC & DXT, which are probably superior to ETC1/2.

@@ -1,6 +1,6 @@
 'use strict';
-import { Entity, Script } from 'src/core';
-import { Matrix, Vector2, Vector3 } from 'src/math';
+import { Entity, Script } from '../core';
+import { Matrix, Vector2, Vector3 } from '../math';
 import { Spherical } from './Spherical';
 
 type MouseWheelEvent = any;

@@ -6,8 +6,8 @@ import {
   DynamicCollider,
   PlaneColliderShape,
   SphereColliderShape
-} from "src/core";
-import { Vector3 } from "src/math";
+} from "../../core";
+import { Vector3 } from "../../math";
 
 // 根据Schema构造Component
 export function colliderConfigure(collider: Collider, props: any) {

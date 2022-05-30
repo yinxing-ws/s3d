@@ -1,4 +1,4 @@
-import { AmbientLight, DiffuseMode, PrimitiveMesh, SkyBoxMaterial } from "src/core";
+import { AmbientLight, DiffuseMode, PrimitiveMesh, SkyBoxMaterial } from "../core";
 import { Oasis } from "./Oasis";
 import { pluginHook } from "./plugins/PluginManager";
 

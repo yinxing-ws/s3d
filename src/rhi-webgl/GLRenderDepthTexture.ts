@@ -1,4 +1,4 @@
-import { IPlatformRenderDepthTexture, Logger, RenderBufferDepthFormat, RenderDepthTexture } from "src/core";
+import { IPlatformRenderDepthTexture, Logger, RenderBufferDepthFormat, RenderDepthTexture } from "../core";
 import { GLTexture } from "./GLTexture";
 import { WebGLRenderer } from "./WebGLRenderer";
 

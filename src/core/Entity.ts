@@ -1,4 +1,4 @@
-import { Matrix, Quaternion, Vector3 } from "src/math";
+import { Matrix, Quaternion, Vector3 } from "../math";
 import { EngineObject } from "./base";
 import { ComponentCloner } from "./clone/ComponentCloner";
 import { Component } from "./Component";

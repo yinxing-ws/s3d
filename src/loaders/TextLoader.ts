@@ -1,4 +1,4 @@
-import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "src/core";
+import { resourceLoader, Loader, AssetPromise, AssetType, LoadItem } from "../core";
 
 @resourceLoader(AssetType.Text, ["txt"], false)
 class TextLoader extends Loader<string> {

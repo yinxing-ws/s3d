@@ -1,4 +1,4 @@
-import { IPhysics } from "src/design";
+import { IPhysics } from "../design";
 import { ColorSpace } from ".";
 import { ResourceManager } from "./asset/ResourceManager";
 import { Event, EventDispatcher, Logger, Time } from "./base";

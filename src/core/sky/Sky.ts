@@ -1,4 +1,4 @@
-import { Matrix } from "src/math";
+import { Matrix } from "../math";
 import { Mesh } from "../graphic";
 import { Material } from "../material";
 

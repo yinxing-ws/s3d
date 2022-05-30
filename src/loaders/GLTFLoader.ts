@@ -1,8 +1,8 @@
-import { AssetPromise, AssetType, Loader, LoadItem, resourceLoader, ResourceManager } from "src/core";
-import { GLTFParser } from "./gltf/GLTFParser";
-import { GLTFResource } from "./gltf/GLTFResource";
+import { AssetPromise, AssetType, Loader, LoadItem, resourceLoader, ResourceManager } from '../core';
+import { GLTFParser } from './gltf/GLTFParser';
+import { GLTFResource } from './gltf/GLTFResource';
 
-@resourceLoader(AssetType.Prefab, ["gltf", "glb"])
+@resourceLoader(AssetType.Prefab, ['gltf', 'glb'])
 export class GLTFLoader extends Loader<GLTFResource> {
   load(item: LoadItem, resourceManager: ResourceManager): AssetPromise<GLTFResource> {
     const url = item.url;

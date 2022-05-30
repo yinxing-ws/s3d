@@ -10,8 +10,8 @@ import {
   TextureCubeFace,
   TextureCubeMap,
   TextureFilterMode
-} from "src/core";
-import { SphericalHarmonics3 } from "src/math";
+} from "../core";
+import { SphericalHarmonics3 } from "../math";
 
 @resourceLoader(AssetType.Env, ["env"])
 class EnvLoader extends Loader<AmbientLight> {

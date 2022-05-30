@@ -9,7 +9,7 @@ import {
   Renderer,
   Skin,
   Texture2D
-} from "src/core";
+} from "../core";
 import { IGLTF } from "./Schema";
 
 /**

@@ -1,5 +1,5 @@
 import { WebGLRenderer } from "./WebGLRenderer";
-import { GLCapabilityType } from "src/core";
+import { GLCapabilityType } from "../core";
 
 /**
  * GLContext extension.
