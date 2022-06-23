@@ -3,3 +3,4 @@ export * from './math';
 export * from './rhi-webgl';
 export * from './controls';
 export * from './loaders';
+export * from './physics-lite';
