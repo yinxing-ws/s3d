@@ -1,15 +1,18 @@
-import { Engine } from "../Engine";
-import { Shader } from "../shader/Shader";
-import { Texture2D } from "../texture/Texture2D";
-import { PBRBaseMaterial } from "./PBRBaseMaterial";
+import { Engine } from '../Engine';
+import { Shader } from '../shader/Shader';
+import { Texture2D } from '../texture/Texture2D';
+import { PBRBaseMaterial } from './PBRBaseMaterial';
 
 /**
  * PBR (Metallic-Roughness Workflow) Material.
  */
 export class PBRMaterial extends PBRBaseMaterial {
-  private static _metallicProp = Shader.getPropertyByName("u_metal");
-  private static _roughnessProp = Shader.getPropertyByName("u_roughness");
-  private static _metallicRoughnessTextureProp = Shader.getPropertyByName("u_metallicRoughnessSampler");
+  private static _metallicProp = Shader.getPropertyByName('u_metal');
+  private static _roughnessProp = Shader.getPropertyByName('u_roughness');
+  private static _metallicRoughnessTextureProp = Shader.getPropertyByName(
+    'u_metallicRoughnessSampler'
+  );
+  private static _brightnessProp = Shader.getPropertyByName('u_brightness');
 
   /**
    * Metallic.
@@ -38,16 +41,32 @@ export class PBRMaterial extends PBRBaseMaterial {
    * @remarks G channel is roughness, B channel is metallic
    */
   get roughnessMetallicTexture(): Texture2D {
-    return <Texture2D>this.shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp);
+    return <Texture2D>(
+      this.shaderData.getTexture(PBRMaterial._metallicRoughnessTextureProp)
+    );
   }
 
   set roughnessMetallicTexture(value: Texture2D) {
-    this.shaderData.setTexture(PBRMaterial._metallicRoughnessTextureProp, value);
+    this.shaderData.setTexture(
+      PBRMaterial._metallicRoughnessTextureProp,
+      value
+    );
     if (value) {
-      this.shaderData.enableMacro("HAS_METALROUGHNESSMAP");
+      this.shaderData.enableMacro('HAS_METALROUGHNESSMAP');
     } else {
-      this.shaderData.disableMacro("HAS_METALROUGHNESSMAP");
+      this.shaderData.disableMacro('HAS_METALROUGHNESSMAP');
     }
+  }
+
+  /**
+   * Metallic.
+   */
+  get brightness(): number {
+    return this.shaderData.getFloat(PBRMaterial._brightnessProp);
+  }
+
+  set brightness(value: number) {
+    this.shaderData.setFloat(PBRMaterial._brightnessProp, value);
   }
 
   /**
@@ -55,9 +74,10 @@ export class PBRMaterial extends PBRBaseMaterial {
    * @param engine - Engine to which the material belongs
    */
   constructor(engine: Engine) {
-    super(engine, Shader.find("pbr"));
+    super(engine, Shader.find('pbr'));
     this.shaderData.setFloat(PBRMaterial._metallicProp, 1.0);
     this.shaderData.setFloat(PBRMaterial._roughnessProp, 1.0);
+    this.shaderData.setFloat(PBRMaterial._brightnessProp, 1.0);
   }
 
   /**

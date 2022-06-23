@@ -54,4 +54,7 @@ vec4 targetColor =vec4(totalRadiance, material.opacity);
 #ifndef OASIS_COLORSPACE_GAMMA
     targetColor = linearToGamma(targetColor);
 #endif
+
+targetColor = vec4(targetColor.rgb * u_brightness, color.a);
+
 gl_FragColor = targetColor;
