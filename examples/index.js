@@ -91,7 +91,7 @@ createDirectLight(-30, 20, 0, 0.6);
 
 const cube = rootEntity.createChild('test');
 const cubeRenderer = cube.addComponent(MeshRenderer);
-const material = new BlinnPhongMaterial(engine);
+const material = new PBRMaterial(engine);
 material.renderFace = RenderFace.Double;
 cubeRenderer.setMaterial(material);
 const geometry = new BufferMesh(engine, 'CustomCubeGeometry');
@@ -105,6 +105,7 @@ geometry.setVertexElements([new VertexElement('POSITION', 0, VertexElementFormat
 cubeRenderer.mesh = geometry;
 
 geometry.addSubMesh(0, ib.length);
+
 
 // engine.resourceManager
 //   .load({

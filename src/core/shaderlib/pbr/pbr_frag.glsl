@@ -56,8 +56,8 @@ vec4 targetColor =vec4(totalRadiance, material.opacity);
 #endif
 
 // contrast
-targetColor = vec4((targetColor.rgb - 0.5f) * u_contrast + 0.5f, targetColor.a);
+targetColor = vec4((targetColor.rgb - 0.5f) * u_pcontrast + 0.5f, targetColor.a);
 // brightness
-targetColor = vec4(targetColor.rgb * u_brightness, color.a);
+targetColor = vec4(targetColor.rgb * u_pbrightness, targetColor.a);
 
 gl_FragColor = targetColor;

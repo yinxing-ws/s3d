@@ -2,8 +2,8 @@ uniform float u_alphaCutoff;
 
 uniform vec4 u_baseColor;
 uniform float u_metal;
-uniform float u_brightness;
-uniform float u_contrast;
+uniform float u_pbrightness;
+uniform float u_pcontrast;
 uniform float u_roughness;
 uniform vec3 u_specularColor;
 uniform float u_glossiness;

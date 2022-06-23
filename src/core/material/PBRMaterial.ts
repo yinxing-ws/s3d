@@ -12,8 +12,8 @@ export class PBRMaterial extends PBRBaseMaterial {
   private static _metallicRoughnessTextureProp = Shader.getPropertyByName(
     'u_metallicRoughnessSampler'
   );
-  private static _brightnessProp = Shader.getPropertyByName('u_brightness');
-  private static _contrastProp = Shader.getPropertyByName('u_contrast');
+  private static _brightnessProp = Shader.getPropertyByName('u_pbrightness');
+  private static _contrastProp = Shader.getPropertyByName('u_pcontrast');
 
   /**
    * Metallic.
@@ -78,7 +78,7 @@ export class PBRMaterial extends PBRBaseMaterial {
   }
 
   set contrast(value: number) {
-    this.shaderData.setFloat(PBRMaterial._contrastProp, value);
+    this.shaderData.setFloat(PBRMaterial._brightnessProp, value);
   }
 
   /**
