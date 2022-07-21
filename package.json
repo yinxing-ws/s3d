@@ -1,6 +1,6 @@
 {
   "name": "siver3d",
-  "version": "0.0.2-beta.7",
+  "version": "0.0.2-beta.8",
   "main": "dist/main.js",
   "module": "dist/module.js",
   "types": "types/index.d.ts",
