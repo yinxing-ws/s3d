@@ -12,8 +12,6 @@ export class PBRMaterial extends PBRBaseMaterial {
   private static _metallicRoughnessTextureProp = Shader.getPropertyByName(
     'u_metallicRoughnessSampler'
   );
-  private static _brightnessProp = Shader.getPropertyByName('u_pbrightness');
-  private static _contrastProp = Shader.getPropertyByName('u_pcontrast');
 
   /**
    * Metallic.
@@ -60,28 +58,6 @@ export class PBRMaterial extends PBRBaseMaterial {
   }
 
   /**
-   * brightness.
-   */
-  get brightness(): number {
-    return this.shaderData.getFloat(PBRMaterial._brightnessProp);
-  }
-
-  set brightness(value: number) {
-    this.shaderData.setFloat(PBRMaterial._brightnessProp, value);
-  }
-
-  /**
-   * contrast.
-   */
-   get contrast(): number {
-    return this.shaderData.getFloat(PBRMaterial._contrastProp);
-  }
-
-  set contrast(value: number) {
-    this.shaderData.setFloat(PBRMaterial._brightnessProp, value);
-  }
-
-  /**
    * Create a pbr metallic-roughness workflow material instance.
    * @param engine - Engine to which the material belongs
    */
@@ -89,8 +65,6 @@ export class PBRMaterial extends PBRBaseMaterial {
     super(engine, Shader.find('pbr'));
     this.shaderData.setFloat(PBRMaterial._metallicProp, 1.0);
     this.shaderData.setFloat(PBRMaterial._roughnessProp, 1.0);
-    this.shaderData.setFloat(PBRMaterial._contrastProp, 1.0);
-    this.shaderData.setFloat(PBRMaterial._brightnessProp, 1.0);
   }
 
   /**
